@@ -1,0 +1,9 @@
+[submodule "historic_cadastre/static/lib/openlayers"]
+	path = historic_cadastre/static/lib/openlayers
+	url = https://github.com/openlayers/openlayers.git
+[submodule "historic_cadastre/static/lib/geoext"]
+	path = historic_cadastre/static/lib/geoext
+	url = https://github.com/geoext/geoext.git
+[submodule "historic_cadastre/static/lib/proj4js"]
+	path = historic_cadastre/static/lib/proj4js
+	url = https://github.com/proj4js/proj4js.git
