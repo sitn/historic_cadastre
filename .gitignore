@@ -1,0 +1,11 @@
+.installed.cfg
+*.pyc
+apache/wsgi.conf
+buildout/bin/
+buildout/develop-eggs/
+buildout/eggs/
+buildout/parts/
+development.ini
+production.ini
+*.egg-info/
+buildout_historic_cadastre.cfg
