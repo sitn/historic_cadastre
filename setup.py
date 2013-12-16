@@ -37,5 +37,8 @@ setup(
         'paste.app_factory': [
             'main = historic_cadastre:main',
         ],
+        'console_scripts': [
+            'print_tpl = historic_cadastre.scripts.print_tpl:main',
+        ],
     },
 )
