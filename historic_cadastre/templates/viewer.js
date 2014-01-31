@@ -11,87 +11,95 @@ Ext.onReady(function() {
     OpenLayers.Lang.setCode("fr");
     // GeoExt global settings
     GeoExt.Lang.set("fr");
-    
-    // ${plan_url}
-    
-    
-    var create_map = function() {
 
-        var extend = [-215,-16,215,15];
-        var restrictedExtent = [1,530,3,31];
-    
-        var map = new OpenLayers.Map({
-            theme: null,
-            units: "m",
-            projection: "EPSG:21781",
-            maxExtent: [-1000,-1000,1000,1000],
-            controls: [
-                new OpenLayers.Control.Navigation(),
-                new OpenLayers.Control.PanZoomBar({panIcons: false}),
-                new OpenLayers.Control.ScaleLine({
-                    geodesic: true,
-                    bottomInUnits: false,
-                    bottomOutUnits: false
-                }),
-                new OpenLayers.Control.MousePosition({numDigits: 0})
-            ]
-        });
-    
-        // IMAGE SECTION //
-        var image_url ='ola';
-        image_url = "${request.static_url('historic_cadastre:static/images/testimg.png')}"
-    
-        var image_layer = new OpenLayers.Layer.Image(
-            'roro',
-            image_url,
-            new  OpenLayers.Bounds(-215,-16,215,15),
-            new OpenLayers.Size(530,31),
-            {
-                numZoomLevels: 5
-        });
-    
-        map.addLayer(image_layer);
+    var scales = [100, 250, 500, 1000, 2000, 5000, 10000];
 
-        var mapPanel = new GeoExt.MapPanel({
-            //title: "GeoExt MapPanel",
-            stateId: "mappanel",
-            map: map,
-            center: new OpenLayers.LonLat(5, 45),
-            zoom: 4,
-            region: "center"
-        });
-    
-    
-        var headerPanel = new Ext.Panel({
-            region: 'north',
-            height: 57,
-            border: false,
-            contentEl: 'header'
-        });
+    var map = new OpenLayers.Map({
+        theme: null,
+        units: "m",
+        projection: "EPSG:21781",
+        maxExtent: [-10000,-10000,10000,10000],
+        center: new OpenLayers.LonLat(0, 0),
+        scales: scales,
+        controls: [
+            new OpenLayers.Control.Navigation({
+                dragPanOptions: {enableKinetic: true}
+            }),
+            new OpenLayers.Control.PanZoomBar({panIcons: false}),
+            new OpenLayers.Control.ScaleLine({
+                geodesic: true,
+                bottomInUnits: false,
+                bottomOutUnits: false
+            }),
+            new OpenLayers.Control.MousePosition({numDigits: 0})
+        ]
+    });
 
-        var viewport = new Ext.Viewport({
-            layout: 'border',
-            renderTo:'main',
-            id:'viewPort',
-            border:true,
-            items: [
-                headerPanel,
-                mapPanel
-            ]
-        });
+    // IMAGE SECTION //
+    // Define the bounds (we place the 0, 0 coordinates in the middle of the image.)
+    var xmin = - Math.ceil(${plan_largeur}/2);
+    var ymin = - Math.ceil(${plan_hauteur}/2);
+    var xmax = ${plan_largeur} + xmin;
+    var ymax = ${plan_hauteur} + ymin;
+    xmin = xmin * ${plan_resolution};
+    ymin = ymin * ${plan_resolution};
+    xmax = xmax * ${plan_resolution};
+    ymax = ymax * ${plan_resolution};
+
+    var image_layer = new OpenLayers.Layer.Image(
+        'the_image',
+        '${plan_url}',
+        new  OpenLayers.Bounds(xmin, ymin, xmax, ymax),
+        new OpenLayers.Size(${plan_largeur},${plan_hauteur})
+    );
+
+    map.events.register('zoomend', this, function() {
+            var scale = map.getScale();
+    });
         
-        viewport.doLayout();
-        // Refait la mise en page si la fenêtre change de taille
-        //pass along browser window resize events to the panel
-        Ext.EventManager.onWindowResize(viewport.doLayout, viewport);
-    };
+    map.addLayer(image_layer);
 
-    
-        Ext.get('loading').remove();
-            Ext.fly('loading-mask').fadeOut({
-                remove: true
-            });
-    
+    // Ext & GeoExt
+    var mapPanel = new GeoExt.MapPanel({
+        stateId: "map",
+        map: map,
+        center: new OpenLayers.LonLat(0, 0),
+        zoom: 3,
+        region: "center",
+        tbar: new Ext.Toolbar({
+            cls: 'map-toolbar'
+        })
+    });
 
-    
+    var tbar = mapPanel.getTopToolbar();
+
+    tbar.addButton(historic_cadastre.Measure(mapPanel));
+
+    var headerPanel = new Ext.Panel({
+        region: 'north',
+        height: 57,
+        border: false,
+        contentEl: 'header'
+    });
+
+    var viewport = new Ext.Viewport({
+        layout: 'border',
+        renderTo:'main',
+        id:'viewPort',
+        border:true,
+        items: [
+            headerPanel,
+            mapPanel
+        ]
+    });
+
+    // Refait la mise en page si la fenêtre change de taille
+    //pass along browser window resize events to the panel
+    Ext.EventManager.onWindowResize(viewport.doLayout, viewport);
+
+    Ext.get('loading').remove();
+    Ext.fly('loading-mask').fadeOut({
+        remove: true
+    });
+
 });
