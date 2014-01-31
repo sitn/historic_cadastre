@@ -18,6 +18,9 @@ sqlalchemy.url = postgresql://${vars:dbuser}:${vars:dbpassword}@${vars:dbhost}:$
 jsbuild_cfg = ${jsbuild:config}
 jsbuild_root_dir = ${buildout:directory}
 
+image_server_graphique = ${vars:image_server_graphique}
+image_server_mutation = ${vars:image_server_mutation}
+
 [server:main]
 use = egg:waitress#main
 host = 0.0.0.0

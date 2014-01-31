@@ -12,6 +12,7 @@
         <link rel="stylesheet" type="text/css" href="${request.static_url('historic_cadastre:static/lib/ext/resources/css/ext-all.css')}" />
         <link rel="stylesheet" type="text/css" href="${request.static_url('historic_cadastre:static/lib/ext/resources/css/xtheme-gray.css')}" />
         <link rel="stylesheet" type="text/css" href="${request.static_url('historic_cadastre:static/lib/openlayers/theme/default/style.css')}" />
+        <link rel="stylesheet" type="text/css" href="${request.static_url('historic_cadastre:static/css/main.css')}" />
 
         <style>
         html, body {
@@ -78,6 +79,6 @@
         <script type="text/javascript" src="${request.static_url('historic_cadastre:static/build/lang-fr.js')}"></script>
 % endif
         
-        <script type="text/javascript" src="${request.route_url('viewer')}"></script>
+        <script type="text/javascript" src="${request.route_url('viewer')}?id_plan=${id}"></script>
     </body>
 </html>
