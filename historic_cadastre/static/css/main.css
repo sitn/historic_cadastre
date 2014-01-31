@@ -1,0 +1,51 @@
+
+.measureLength, .measureArea {
+    height:26px !important;
+    width:26px !important;
+}
+
+.map-toolbar .measureLength {
+    background:url(../images/normal/icon_distance.gif);
+}
+.map-toolbar .over .measureLength {
+    background:url(../images/over/icon_distance_over.gif);
+}
+.x-btn-pressed .measureLength {
+    background-image:url(../images/on/icon_distance_on.gif) !important;
+}
+
+.map-toolbar .measureArea {
+    background:url(../images/normal/icon_surface.gif);
+}
+.map-toolbar .over .measureArea {
+    background:url(../images/over/icon_surface_over.gif);
+}
+.x-btn-pressed .measureArea {
+    background-image:url(../images/on/icon_surface_on.gif) !important;
+}
+
+.map-toolbar .img-btn .x-btn-tl,
+.map-toolbar .img-btn .x-btn-tr,
+.map-toolbar .img-btn .x-btn-tc,
+.map-toolbar .img-btn .x-btn-ml,
+.map-toolbar .img-btn .x-btn-mr,
+.map-toolbar .img-btn .x-btn-mc,
+.map-toolbar .img-btn .x-btn-bl,
+.map-toolbar .img-btn .x-btn-br,
+.map-toolbar .img-btn .x-btn-bc,
+.map-toolbar .over .img-btn .x-btn-tl,
+.map-toolbar .over .img-btn .x-btn-tr,
+.map-toolbar .over .img-btn .x-btn-tc,
+.map-toolbar .over .img-btn .x-btn-ml,
+.map-toolbar .over .img-btn .x-btn-mr,
+.map-toolbar .over .img-btn .x-btn-mc,
+.map-toolbar .over .img-btn .x-btn-bl,
+.map-toolbar .over .img-btn .x-btn-br,
+.map-toolbar .over .img-btn .x-btn-bc {
+    background-image:none;
+}
+
+.map-toolbar {
+    background-color: white;
+    background-image: none;
+}
