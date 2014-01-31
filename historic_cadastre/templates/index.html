@@ -78,6 +78,6 @@
         <script type="text/javascript" src="${request.static_url('historic_cadastre:static/build/lang-fr.js')}"></script>
 % endif
         
-        <script type="text/javascript" src="${request.route_url('viewer')}"></script>
+        <script type="text/javascript" src="${request.route_url('viewer')}?id_plan=${id}"></script>
     </body>
 </html>
