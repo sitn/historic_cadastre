@@ -10,3 +10,4 @@ production.ini
 *.egg-info/
 buildout_historic_cadastre.cfg
 historic_cadastre/static/build/*.js
+print/config.yaml
