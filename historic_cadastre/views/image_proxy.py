@@ -6,26 +6,27 @@ from pyramid.response import FileResponse
 from historic_cadastre.models import DBSession
 from historic_cadastre.models import VPlanGraphique
 
+import os
+
 @view_config(route_name='image_proxy')
 def image_proxy(request):
     
     mapper = {
         'graphique': VPlanGraphique
     }
-    
-    
+
     id_plan = int(request.matchdict['id'])
     type = request.matchdict['type']
     
-    db_filepath = DBSession.query(mapper[type].chemin_cad).get(id_plan)
+    db_filepath = DBSession.query(mapper[type]).get(id_plan)
+    db_filepath = db_filepath.chemin_cad
     
-    
-    asd
-    
-    
-    
-    file = "K:/Consultation_plans/Plans_cadastraux/Boudry/Auvernier/Rf_14_0_o_10000_1876.jpg"
-    file = "C:/travail/tmp/Rf_20_2_o_500_2.jpg"
+    if type == 'graphique':
+        registry_string = 'image_server_graphique'
+    elif type == 'mutation':
+        registry_string = 'image_server_mutation'
+
+    file = os.path.join(request.registry.settings[registry_string], db_filepath)
 
     return FileResponse(
         file,
