@@ -11,3 +11,4 @@ production.ini
 buildout_historic_cadastre.cfg
 historic_cadastre/static/build/*.js
 print/config.yaml
+print/templates/print.mako
