@@ -74,6 +74,33 @@ Ext.onReady(function() {
     var tbar = mapPanel.getTopToolbar();
 
     tbar.addButton(historic_cadastre.Measure(mapPanel));
+    
+    // Add print Window
+    tbar.addItem('->');
+    tbar.addItem('-');
+    
+    var url = "${request.route_url('printproxy')}";
+    var print_window;
+
+    tbar.addButton(
+        new Ext.Button({
+            iconCls: "print",
+            text: 'Imprimer',
+            tooltip: "Impression",
+            enableToggle: true,
+            listeners: {
+                toggle: function(button) {
+                    if (button.pressed) {
+                        print_window = historic_cadastre.PrintWindow(mapPanel, url);
+                        print_window.show();
+                        print_window.anchorTo(GeoExt.MapPanel.guess().body, 'tr-tr', [0, -1]);
+                    } else {
+                        print_window.hide();
+                    }
+                }
+            }
+        })
+    );
 
     var headerPanel = new Ext.Panel({
         region: 'north',
