@@ -25,6 +25,8 @@ setup(
         'sqlahelper',
         'papyrus',
         'JSTools',
+        'httplib2',
+        'simplejson'
     ],
     packages=find_packages(exclude=['ez_setup']),
     include_package_data=True,
