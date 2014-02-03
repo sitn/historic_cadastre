@@ -22,6 +22,7 @@ jsbuild_root_dir = ${buildout:directory}
 image_server_graphique = ${vars:image_server_graphique}
 image_server_mutation = ${vars:image_server_mutation}
 
+print_url = ${vars:print_url}
 
 # By default, the toolbar only appears for clients from IP addresses
 # '127.0.0.1' and '::1'.
