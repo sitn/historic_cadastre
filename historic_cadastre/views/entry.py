@@ -18,23 +18,38 @@ class Entry(object):
         if 'id' not in self.request.params:
             return HTTPNotFound()
 
+        code = None
+
+        if 'code' in self.request.params:
+            code = self.request.params['code']
+
         return {
             'debug': self.debug,
-            'id': self.request.params['id']
+            'id': self.request.params['id'],
+            'code': code
         }
-        
+
     @view_config(route_name='viewer', renderer='viewer.js')
     def viewer(self):
 
         id_plan = int(self.request.params['id_plan'])
-#        type = self.request.params['type']
+
+        code = None
+
+        if 'code' in self.request.params:
+            code = self.request.params['code']
+
         type = 'graphique'
 
         params = DBSession.query(VPlanGraphique).get(id_plan)
 
         plan_url = self.request.route_url('image_proxy', type=type, id=id_plan)
 
+        if code:
+            plan_url += '?code=' + code
+
         self.request.response.content_type = 'application/javascript'
+
         return {
             'debug': self.debug,
             'id_plan': id_plan,

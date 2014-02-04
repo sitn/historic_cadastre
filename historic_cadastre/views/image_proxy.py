@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from pyramid.view import view_config
+from pyramid.httpexceptions import HTTPNotFound
 
 from pyramid.response import FileResponse
 
@@ -21,7 +22,21 @@ def image_proxy(request):
     id_plan = int(request.matchdict['id'])
     type = request.matchdict['type']
 
+    code = None
+
+    if 'code' in request.params:
+        code = request.params['code']
+
+    is_intranet = False
+
+    if code and code == 'toto':
+        is_intranet = True
+
     db_filepath = DBSession.query(mapper[type]).get(id_plan)
+
+    if db_filepath.is_internet is False and is_intranet is False:
+        return HTTPNotFound()
+
     db_filepath = db_filepath.chemin_cad
 
     if type == 'graphique':
