@@ -78,7 +78,11 @@
         <script type="text/javascript" src="${request.static_url('historic_cadastre:static/build/app.js')}"></script>
         <script type="text/javascript" src="${request.static_url('historic_cadastre:static/build/lang-fr.js')}"></script>
 % endif
-        
+
+% if code:
+        <script type="text/javascript" src="${request.route_url('viewer')}?id_plan=${id}&code=${code}"></script>
+% else:
         <script type="text/javascript" src="${request.route_url('viewer')}?id_plan=${id}"></script>
+% endif
     </body>
 </html>
