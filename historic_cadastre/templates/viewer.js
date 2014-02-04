@@ -73,6 +73,12 @@ Ext.onReady(function() {
 
     var tbar = mapPanel.getTopToolbar();
 
+    tbar.addItem({
+            xtype: 'tbtext',
+            text: '<b>Cadastre</b>: ${nomcad} - <b>Plan</b> n° ${no_plan}'
+    });
+    tbar.addItem(' ');
+    tbar.addItem('-');
     tbar.addButton(historic_cadastre.Measure(mapPanel));
     
     // Add print Window

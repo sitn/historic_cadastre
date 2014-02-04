@@ -56,5 +56,7 @@ class Entry(object):
             'plan_largeur': params.larg,
             'plan_hauteur': params.haut,
             'plan_resolution': params.resol,
-            'plan_url': plan_url
+            'plan_url': plan_url,
+            'nomcad': params.cadastre,
+            'no_plan': params.plan
         }
