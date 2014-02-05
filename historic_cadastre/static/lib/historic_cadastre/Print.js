@@ -9,17 +9,15 @@ Ext.namespace('historic_cadastre');
 
 historic_cadastre.PrintWindow = function(mapPanel, url) {
     var printWin = new Ext.Window({
-        width: 250,
-        bodyStyle: 'padding: 5px',
+        width: 260,
         renderTo: Ext.getBody(),
-      //  title: this.printwindowTitle,
-        border: false,
-        layout: 'fit',
-        autoHeight: false,
-        height: 350,
         closeAction: 'hide',
-        autoScroll: true,
-        cls: 'toolwindow printpanel',
+        border: false,
+        draggable: false,
+        unstyled: true,
+        resizable: false,
+        shadow: false,
+        cls: 'subtoolbar',
         listeners: {
             show: function(panel) {
                 var printPanel = new historic_cadastre.Print(mapPanel, printWin, {
@@ -99,11 +97,11 @@ historic_cadastre.Print = function(mapPanel, printWin, options) {
         autoFit: true,
         printProvider: printProvider,
         bodyStyle: {padding: "5px"},
-        labelWidth: 65,
-        defaults: {width: 115},
+        labelWidth: 80,
+        defaults: {width: 130},
         region: "east",
         border: false,
-        width: 200
+        width: 230
     });
 
     var onLoadCaps = function() {
@@ -111,17 +109,17 @@ historic_cadastre.Print = function(mapPanel, printWin, options) {
         printForm.insert(0, {
             xtype: "textfield",
             name: "title",
-            fieldLabel: "Title",
-            value: "A custom title",
+            fieldLabel: OpenLayers.i18n("Title"),
+            emptyText: OpenLayers.i18n('Add a title'),
             plugins: new GeoExt.plugins.PrintProviderField({
                 printProvider: printProvider
             })
         });
         printForm.insert(1, {
             xtype: "textarea",
-            fieldLabel: "Comment",
+            fieldLabel: OpenLayers.i18n("Comment"),
             name: "comment",
-            value: "A custom comment",
+            emptyText:  OpenLayers.i18n("Add a comment"),
             plugins: new GeoExt.plugins.PrintProviderField({
                 printProvider: printProvider
             })
