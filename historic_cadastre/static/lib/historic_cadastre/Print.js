@@ -65,32 +65,49 @@ historic_cadastre.Print = function(mapPanel, printWin, options) {
     if (map.getLayersByName('print').length > 0) {
         map.removeLayer(map.getLayersByName('print')[0]);
     }
-        
-    var extentLayer = new OpenLayers.Layer.Vector("print", {
+
+    var extentLayer = new OpenLayers.Layer.Vector(null, {
         displayInLayerSwitcher: false,
-        styleMap: new OpenLayers.StyleMap(new OpenLayers.Style(Ext.applyIf({
-            pointRadius: 4,
-            graphicName: "square",
-            rotation: "${getRotation}",
-            strokeColor: "${getStrokeColor}",
-            fillOpacity: "${getFillOpacity}"
-        }, OpenLayers.Feature.Vector.style["default"]), {
-            context: {
-                getRotation: function(feature) {
-                    return printForm.printPage.rotation;
-                },
-                getStrokeColor: function(feature) {
-                    return feature.geometry.CLASS_NAME == "OpenLayers.Geometry.Point" ?
-                        "#000" : "#ee9900";
-                },
-                getFillOpacity: function(feature) {
-                    return feature.geometry.CLASS_NAME == "OpenLayers.Geometry.Point" ?
-                        0 : 0.4;
+        styleMap: new OpenLayers.StyleMap({
+            "default": new OpenLayers.Style({
+                fillColor: '#ee9900',
+                fillOpacity: 0.4,
+                strokeWidth: 0
+            }),
+            "temporary": new OpenLayers.Style({
+                fillColor: "#ffffff",
+                fillOpacity: 1,
+                strokeColor: "#000000",
+                strokeOpacity: 1,
+                strokeWidth: 1,
+                pointRadius: 5,
+                cursor: "${role}"
+            }),
+            "rotate": new OpenLayers.Style({
+                externalGraphic: OpenLayers.Util.getImagesLocation() +
+                    "print-rotate.png",
+                fillOpacity: 1.0,
+                graphicXOffset: 8,
+                graphicYOffset: 8,
+                graphicWidth: 20,
+                graphicHeight: 20,
+                cursor: "pointer",
+                display: "${display}",
+                rotation: "${rotation}"
+            }, {
+                context: {
+                    display: function(f) {
+                        return f.attributes.role == "se-rotate" ? "" : "none";
+                    },
+                    rotation: function(f) {
+                        //return printPanel.printPage.rotation;
+                        return printForm.printPage.rotation;
+                    }
                 }
-            }
+            })
         })
-    )});
-   
+    });
+
     var printForm = new GeoExt.ux.SimplePrint({
         mapPanel: mapPanel,
         layer: extentLayer, // optional
@@ -101,7 +118,12 @@ historic_cadastre.Print = function(mapPanel, printWin, options) {
         defaults: {width: 130},
         region: "east",
         border: false,
-        width: 230
+        width: 230,
+        printExtentOptions: {
+            transformFeatureOptions: {
+                rotationHandleSymbolizer: "rotate"
+            }
+        }
     });
 
     var onLoadCaps = function() {
