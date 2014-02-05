@@ -1,3 +1,7 @@
+html body {
+    font: 12px tahoma,arial,helvetica,sans-serif;
+    background-color: white;
+}
 
 .measureLength, .measureArea {
     height:26px !important;
@@ -80,8 +84,8 @@
 }
 
 .subtoolbar .x-toolbar {
-	font-size: 18px;
-	background: none;
+    font-size: 18px;
+    background: none;
     border-width: 0 !important;
 }
 
@@ -99,4 +103,19 @@
 .pdf-window .x-window-mc table {
     margin-left: auto;
     margin-right: auto;
+}
+
+.ext-ie div.olControlScaleLine, .ext-ie div.olControlMousePosition {
+    background-color: #ffffff; /* IE doesn't support rgba */
+}
+
+div.olControlScaleLine, div.olControlMousePosition {
+    background-color: rgba(255,255,255,0.7);
+    color:#000000;
+}
+
+div.olControlScaleLine div.olControlScaleLineTop {
+    border-color: -moz-use-text-color black black;
+    border: 2px solid black;
+    border-top: none;
 }

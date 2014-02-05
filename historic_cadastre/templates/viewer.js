@@ -26,12 +26,12 @@ Ext.onReady(function() {
                 dragPanOptions: {enableKinetic: true}
             }),
             new OpenLayers.Control.PanZoomBar({panIcons: false}),
+//            new OpenLayers.Control.MousePosition({numDigits: 0}),
             new OpenLayers.Control.ScaleLine({
                 geodesic: true,
                 bottomInUnits: false,
                 bottomOutUnits: false
-            }),
-            new OpenLayers.Control.MousePosition({numDigits: 0})
+            })
         ]
     });
 
@@ -53,11 +53,38 @@ Ext.onReady(function() {
         new OpenLayers.Size(${plan_largeur},${plan_hauteur})
     );
 
-    map.events.register('zoomend', this, function() {
-            var scale = map.getScale();
-    });
-        
     map.addLayer(image_layer);
+
+    var bbar = new Ext.Toolbar({
+        cls: 'map-toolbar',
+        items: [{
+            xtype: 'tbtext',
+            text: [
+                'Information dépourvues de foi publique, &copy; ',
+                'SGRF, ',
+                'République et Canton de Neuchâtel'
+            ].join('')
+        },
+        '-',
+        {
+            xtype: 'tbtext',
+            text: [
+                '<span style="color:red;font-weight:bold;">ATTENTION</span>: ces plans ne sont pas orientés, le Nord ne se trouve pas forcèmenent en haut de la carte!'
+            ]
+        },
+        '->',
+        {
+            xtype: 'tbtext',
+            id: 'scale_text'
+        }]
+    });
+
+    // Show map Scale
+    map.events.register('zoomend', this, function() {
+        var scale = Math.round(map.getScale());
+        var tbtext = Ext.getCmp('scale_text');
+        tbtext.setText('Échelle: 1:'+scale);
+    });
 
     // Ext & GeoExt
     var mapPanel = new GeoExt.MapPanel({
@@ -68,19 +95,27 @@ Ext.onReady(function() {
         region: "center",
         tbar: new Ext.Toolbar({
             cls: 'map-toolbar'
-        })
+        }),
+        bbar: bbar
     });
 
     var tbar = mapPanel.getTopToolbar();
 
     tbar.addItem({
             xtype: 'tbtext',
-            text: '<b>Cadastre</b>: ${nomcad} - <b>Plan</b> n° ${no_plan}'
+            text: '<b>Cadastre</b>: ${nomcad} - <b>Plan</b> n° ${no_plan}',
+            style: 'font-size:11.5px;'
     });
     tbar.addItem(' ');
     tbar.addItem('-');
-    tbar.addButton(historic_cadastre.Measure(mapPanel));
-    
+    var id_measure = 'measure_text';
+    tbar.addButton(historic_cadastre.Measure(mapPanel, id_measure));
+    tbar.addItem('-');
+    tbar.addItem({
+        xtype: 'tbtext',
+        id: id_measure,
+        style: 'color:red;font-size:11.5px;font-weight:bold;'
+    });
     // Add print Window
     tbar.addItem('->');
     tbar.addItem('-');

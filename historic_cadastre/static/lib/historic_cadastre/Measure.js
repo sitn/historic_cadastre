@@ -1,11 +1,12 @@
 Ext.namespace('historic_cadastre');
 
-historic_cadastre.Measure = function(mapPanel) {
+historic_cadastre.Measure = function(mapPanel, id_measure) {
 
     var length = new OpenLayers.Control.Measure(OpenLayers.Handler.Path, {
         eventListeners: {
             measure: function(evt) {
-                alert("The length was " + evt.measure + evt.units);
+                var tbtext = Ext.getCmp(id_measure);
+                tbtext.setText('Distance mesurée: '+Math.round(evt.measure*10)/10+' m');
             }
         }
     });
@@ -13,7 +14,8 @@ historic_cadastre.Measure = function(mapPanel) {
     var area = new OpenLayers.Control.Measure(OpenLayers.Handler.Polygon, {
         eventListeners: {
             measure: function(evt) {
-                alert("The area was " + evt.measure + evt.units);
+                var tbtext = Ext.getCmp(id_measure);
+                tbtext.setText('Surface mesurée: '+Math.round(evt.measure*10)/10+' m<sup>2</sup>');
             }
         }
     });
@@ -36,6 +38,8 @@ historic_cadastre.Measure = function(mapPanel) {
                     length.activate();
                 } else {
                     length.deactivate();
+                    var tbtext = Ext.getCmp(id_measure);
+                    tbtext.setText('');
                 }
             }
         }
@@ -54,6 +58,8 @@ historic_cadastre.Measure = function(mapPanel) {
                     area.activate();
                 } else {
                     area.deactivate();
+                    var tbtext = Ext.getCmp(id_measure);
+                    tbtext.setText('');
                 }
             }
         }
