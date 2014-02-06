@@ -7,7 +7,7 @@
 
 Ext.namespace('historic_cadastre');
 
-historic_cadastre.PrintWindow = function(mapPanel, url, options) {
+historic_cadastre.PrintWindow = function(button, mapPanel, url, options) {
 
     options['printUrl'] = url;
 
@@ -25,11 +25,15 @@ historic_cadastre.PrintWindow = function(mapPanel, url, options) {
             show: function(panel) {
                 var printPanel = new historic_cadastre.Print(mapPanel, printWin, options).printPanel;
             },
+            beforehide: function() {
+                printWin.removeAll();
+            },
             hide: function() {
                 var map = mapPanel.map;
                 if (map.getLayersByName('print').length > 0) {
                     map.removeLayer(map.getLayersByName('print')[0]);
                 }
+                button.toggle(false);
             }
         }
     });
@@ -75,7 +79,7 @@ historic_cadastre.Print = function(mapPanel, printWin, options) {
         map.removeLayer(map.getLayersByName('print')[0]);
     }
 
-    var extentLayer = new OpenLayers.Layer.Vector(null, {
+    var extentLayer = new OpenLayers.Layer.Vector('print', {
         displayInLayerSwitcher: false,
         styleMap: new OpenLayers.StyleMap({
             "default": new OpenLayers.Style({
