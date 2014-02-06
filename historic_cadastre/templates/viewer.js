@@ -142,7 +142,7 @@ Ext.onReady(function() {
             listeners: {
                 toggle: function(button) {
                     if (button.pressed) {
-                        print_window = historic_cadastre.PrintWindow(mapPanel, url, options);
+                        print_window = historic_cadastre.PrintWindow(button, mapPanel, url, options);
                         print_window.show();
                         print_window.anchorTo(GeoExt.MapPanel.guess().body, 'tr-tr', [0, -1]);
                     } else {
