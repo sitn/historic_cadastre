@@ -33,6 +33,17 @@
               fontSize: 5
               labelDistance: 2
               barBgColor: #FFFFFF
+        - !columns
+          condition: showDescription
+          absoluteX: 20
+          absoluteY: 70
+          width: 250
+          items:
+            - !text
+              text: 'Cadastre: <%text>$</%text>{cadastre} - Plan n° <%text>$</%text>{no_plan}, <%text>$</%text>{type_plan}'
+              fontSize: 8
+              align: left
+              vertAlign: top
         # Date
         - !columns
           absoluteX: 20

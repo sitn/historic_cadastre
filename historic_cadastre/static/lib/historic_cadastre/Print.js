@@ -7,7 +7,10 @@
 
 Ext.namespace('historic_cadastre');
 
-historic_cadastre.PrintWindow = function(mapPanel, url) {
+historic_cadastre.PrintWindow = function(mapPanel, url, options) {
+
+    options['printUrl'] = url;
+
     var printWin = new Ext.Window({
         width: 260,
         renderTo: Ext.getBody(),
@@ -20,12 +23,7 @@ historic_cadastre.PrintWindow = function(mapPanel, url) {
         cls: 'subtoolbar',
         listeners: {
             show: function(panel) {
-                var printPanel = new historic_cadastre.Print(mapPanel, printWin, {
-                    width: 240,
-                    labelWidth: 80,
-                    fieldsWidth: 140,
-                    printUrl: url
-                }).printPanel;
+                var printPanel = new historic_cadastre.Print(mapPanel, printWin, options).printPanel;
             },
             hide: function() {
                 var map = mapPanel.map;
@@ -41,6 +39,9 @@ historic_cadastre.PrintWindow = function(mapPanel, url) {
 
 historic_cadastre.Print = function(mapPanel, printWin, options) {
 
+    var printUrl =options.printUrl
+    delete options['printUrl'];
+
     var  printProvider = new GeoExt.data.PrintProvider({
         // using get for remote service access without same origin restriction.
         // For asynchronous requests, we would set method to "POST".
@@ -53,12 +54,20 @@ historic_cadastre.Print = function(mapPanel, printWin, options) {
         //capabilities: printCapabilities,
         //url: "/geoserver/pdf/",
         //autoLoad: true
-        url: options.printUrl,
+        url: printUrl,
         autoLoad: true,
         baseParams: {
-            url: options.printUrl
+            url: printUrl
         }
     });
+
+    if (Object.keys(options).length > 0) {
+        options['showDescription'] = true;
+    } else {
+        options['showDescription']  = false;
+    }
+
+    printProvider.customParams = options;
     
     var map = mapPanel.map;
 

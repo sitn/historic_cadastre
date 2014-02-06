@@ -123,6 +123,16 @@ Ext.onReady(function() {
     var url = "${request.route_url('printproxy')}";
     var print_window;
 
+% if nomcad:
+    var options = {
+        'cadastre': '${nomcad}'.trim(),
+        'no_plan': '${no_plan}',
+        'type_plan': '${type_plan}'
+    };
+% else:
+    var option;
+% endif
+
     tbar.addButton(
         new Ext.Button({
             iconCls: "print",
@@ -132,7 +142,7 @@ Ext.onReady(function() {
             listeners: {
                 toggle: function(button) {
                     if (button.pressed) {
-                        print_window = historic_cadastre.PrintWindow(mapPanel, url);
+                        print_window = historic_cadastre.PrintWindow(mapPanel, url, options);
                         print_window.show();
                         print_window.anchorTo(GeoExt.MapPanel.guess().body, 'tr-tr', [0, -1]);
                     } else {

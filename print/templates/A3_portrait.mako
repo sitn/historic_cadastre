@@ -34,6 +34,17 @@
               labelDistance: 4
               barBgColor: #FFFFFF
         - !columns
+          condition: showDescription
+          absoluteX: 20
+          absoluteY: 93
+          width: 250
+          items:
+            - !text
+              text: 'Cadastre: <%text>$</%text>{cadastre} - Plan n° <%text>$</%text>{no_plan}, <%text>$</%text>{type_plan}'
+              fontSize: 8
+              align: left
+              vertAlign: top
+        - !columns
           absoluteX: 20
           absoluteY: 55
           width: 200
