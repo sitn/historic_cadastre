@@ -32,6 +32,13 @@ class Entry(object):
     @view_config(route_name='viewer', renderer='viewer.js')
     def viewer(self):
 
+        type_plan = {
+            'o': u'original',
+            'm': u'muté',
+            'rp': u'remanié',
+            'c': u'copié'
+        }
+
         id_plan = int(self.request.params['id_plan'])
 
         code = None
@@ -58,5 +65,6 @@ class Entry(object):
             'plan_resolution': params.resol,
             'plan_url': plan_url,
             'nomcad': params.cadastre,
-            'no_plan': params.plan
+            'no_plan': params.plan,
+            'type_plan': type_plan[params.type_plan]
         }
