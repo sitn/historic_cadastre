@@ -29,7 +29,7 @@ def image_proxy(request):
 
     is_intranet = False
 
-    if code and code == 'toto':
+    if code and code == request.registry.settings['intranet_code']:
         is_intranet = True
 
     db_filepath = DBSession.query(mapper[type]).get(id_plan)
