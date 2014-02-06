@@ -23,6 +23,8 @@ image_server_mutation = ${vars:image_server_mutation}
 
 print_url = ${vars:print_url}
 
+intranet_code = ${vars:intranet_code}
+
 [server:main]
 use = egg:waitress#main
 host = 0.0.0.0
