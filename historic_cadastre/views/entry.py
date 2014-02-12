@@ -3,7 +3,7 @@ from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPNotFound
 
 from historic_cadastre.models import DBSession
-from historic_cadastre.models import VPlanGraphique
+from historic_cadastre.models import VPlanGraphique, Servitude, CadastreGraphique
 
 class Entry(object):
 
@@ -18,6 +18,9 @@ class Entry(object):
         if 'id' not in self.request.params:
             return HTTPNotFound()
 
+        if 'type' not in self.request.params:
+            return HTTPNotFound()
+
         code = None
 
         if 'code' in self.request.params:
@@ -26,11 +29,19 @@ class Entry(object):
         return {
             'debug': self.debug,
             'id': self.request.params['id'],
-            'code': code
+            'code': code,
+            'type': self.request.params['type']
         }
 
     @view_config(route_name='viewer', renderer='viewer.js')
     def viewer(self):
+
+        mapper = {
+            'graphique': VPlanGraphique,
+            'servitude': Servitude,
+            'cadastre_graphique': CadastreGraphique
+        }
+
 
         type_plan = {
             'o': u'original',
@@ -39,23 +50,30 @@ class Entry(object):
             'c': u'copié'
         }
 
-        id_plan = int(self.request.params['id_plan'])
+        id_plan = self.request.params['id_plan']
 
         code = None
 
         if 'code' in self.request.params:
             code = self.request.params['code']
 
-        type = 'graphique'
+        type_ = self.request.params['type']
 
-        params = DBSession.query(VPlanGraphique).get(id_plan)
+        mapped_class = mapper[type_]
 
-        plan_url = self.request.route_url('image_proxy', type=type, id=id_plan)
+        params = DBSession.query(mapped_class).get(id_plan)
+
+        plan_url = self.request.route_url('image_proxy', type=type_, id=id_plan)
 
         if code:
             plan_url += '?code=' + code
 
         self.request.response.content_type = 'application/javascript'
+
+        if params.type_plan in type_plan.keys():
+            type_plan_ = type_plan[params.type_plan]
+        else:
+            type_plan_ = params.type_plan
 
         return {
             'debug': self.debug,
@@ -66,5 +84,5 @@ class Entry(object):
             'plan_url': plan_url,
             'nomcad': params.cadastre,
             'no_plan': params.plan,
-            'type_plan': type_plan[params.type_plan]
+            'type_plan': type_plan_
         }
