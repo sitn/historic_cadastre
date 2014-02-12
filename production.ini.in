@@ -20,6 +20,8 @@ jsbuild_root_dir = ${buildout:directory}
 
 image_server_graphique = ${vars:image_server_graphique}
 image_server_mutation = ${vars:image_server_mutation}
+image_server_servitudes = ${vars:image_server_servitudes}
+image_server_cadastre_graphique = ${vars:image_server_cadastre_graphique}
 
 print_url = ${vars:print_url}
 
