@@ -5,7 +5,7 @@ from pyramid.httpexceptions import HTTPNotFound
 from pyramid.response import FileResponse
 
 from historic_cadastre.models import DBSession
-from historic_cadastre.models import VPlanGraphique
+from historic_cadastre.models import VPlanGraphique, Servitude, CadastreGraphique
 
 import logging
 import os
@@ -16,11 +16,17 @@ log = logging.getLogger(__name__)
 def image_proxy(request):
 
     mapper = {
-        'graphique': VPlanGraphique
+        'graphique': VPlanGraphique,
+        'servitude': Servitude,
+        'cadastre_graphique': CadastreGraphique
     }
 
-    id_plan = int(request.matchdict['id'])
     type = request.matchdict['type']
+
+    if type == 'graphique':
+        id_plan = int(request.matchdict['id'])
+    else:
+        id_plan = request.matchdict['id']
 
     code = None
 
@@ -43,6 +49,10 @@ def image_proxy(request):
         registry_string = 'image_server_graphique'
     elif type == 'mutation':
         registry_string = 'image_server_mutation'
+    elif type == 'servitude':
+        registry_string = 'image_server_servitudes'
+    elif type == 'cadastre_graphique':
+        registry_string = 'image_server_cadastre_graphique'
 
     log.info("Get image with id = %s." % id_plan)
 
