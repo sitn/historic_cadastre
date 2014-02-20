@@ -103,7 +103,11 @@ Ext.onReady(function() {
 
     tbar.addItem({
             xtype: 'tbtext',
+% if echelle:
+            text: '<b>Cadastre</b>: ${nomcad} - <b>Plan</b> n° ${no_plan}, ${type_plan}, échelle de base 1:${echelle}',
+% else:
             text: '<b>Cadastre</b>: ${nomcad} - <b>Plan</b> n° ${no_plan}, ${type_plan}',
+% endif
             style: 'font-size:11.5px;'
     });
     tbar.addItem(' ');

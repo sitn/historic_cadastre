@@ -38,7 +38,7 @@ port = ${vars:waitress_port}
 ###
 
 [loggers]
-keys = root, historic_cadastre, sqlalchemy
+keys = root, historic_cadastre
 
 [handlers]
 keys = console
