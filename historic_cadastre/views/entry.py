@@ -46,7 +46,7 @@ class Entry(object):
         type_plan = {
             'o': u'original',
             'm': u'muté',
-            'rp': u'remanié',
+            'r': u'remanié',
             'c': u'copié'
         }
 
@@ -70,10 +70,15 @@ class Entry(object):
 
         self.request.response.content_type = 'application/javascript'
 
-        if params.type_plan in type_plan.keys():
-            type_plan_ = type_plan[params.type_plan]
+        if params.type_plan[0:1] in type_plan.keys():
+            type_plan_ = type_plan[params.type_plan[0:1]]
         else:
             type_plan_ = params.type_plan
+
+        if params.echelle:
+            echelle = params.echelle
+        else:
+            echelle = None
 
         return {
             'debug': self.debug,
@@ -84,5 +89,6 @@ class Entry(object):
             'plan_url': plan_url,
             'nomcad': params.cadastre,
             'no_plan': params.plan,
-            'type_plan': type_plan_
+            'type_plan': type_plan_,
+            'echelle': echelle
         }
