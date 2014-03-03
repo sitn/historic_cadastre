@@ -24,9 +24,9 @@ def image_proxy(request):
     type = request.matchdict['type']
 
     if type == 'graphique':
-        id_plan = int(request.matchdict['id'])
+        id_img = int(request.matchdict['id'])
     else:
-        id_plan = request.matchdict['id']
+        id_img = request.matchdict['id']
 
     code = None
 
@@ -38,7 +38,7 @@ def image_proxy(request):
     if code and code == request.registry.settings['intranet_code']:
         is_intranet = True
 
-    db_filepath = DBSession.query(mapper[type]).get(id_plan)
+    db_filepath = DBSession.query(mapper[type]).get(id_img)
 
     if db_filepath.is_internet is False and is_intranet is False:
         return HTTPNotFound()
@@ -54,12 +54,21 @@ def image_proxy(request):
     elif type == 'cadastre_graphique':
         registry_string = 'image_server_cadastre_graphique'
 
-    log.info("Get image with id = %s." % id_plan)
+    log.info("Get image with id = %s." % id_img)
 
     file = os.path.join(request.registry.settings[registry_string], db_filepath)
+    fileName, fileExtension = os.path.splitext(file)
+
+    extension = {
+        '.jpg': 'image/jpg',
+        '.jpeg': 'image/jpg',
+        '.png': 'image/png',
+        '.tif': 'image/tif',
+        '.tiff': 'image/tif',
+    }
 
     return FileResponse(
         file,
         request = request,
-        content_type = 'image/jpg'
+        content_type = extension[fileExtension.lower()]
     )
