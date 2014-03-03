@@ -65,7 +65,12 @@ historic_cadastre.Print = function(mapPanel, printWin, options) {
         }
     });
 
-    if (Object.keys(options).length > 0) {
+    var keys = [];
+    for(var k in options) {
+        keys.push(k);
+    }
+
+    if (keys.length > 0) {
         options['showDescription'] = true;
     } else {
         options['showDescription']  = false;
