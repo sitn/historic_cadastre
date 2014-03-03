@@ -5,7 +5,7 @@ Ext.onReady(function() {
 
    // OpenLayers global settings
     OpenLayers.Number.thousandsSeparator = ' ';
-    OpenLayers.IMAGE_RELOAD_ATTEMPTS = 2;
+    OpenLayers.IMAGE_RELOAD_ATTEMPTS = 5;
     OpenLayers.DOTS_PER_INCH = 72;
     OpenLayers.ImgPath = "${request.static_url('historic_cadastre:static/images/ol/')}";
     OpenLayers.Lang.setCode("fr");
@@ -69,8 +69,10 @@ Ext.onReady(function() {
         {
             xtype: 'tbtext',
             text: [
-                '<span style="color:red;font-weight:bold;">ATTENTION</span>: ces plans ne sont pas orientés, le Nord ne se trouve pas forcèmenent en haut de la carte!'
-            ]
+                '<span style="color:red;font-weight:bold;">ATTENTION</span>:',
+                ' ces plans ne sont pas orientés, le Nord ne se trouve pas ',
+                'forcément en haut de la carte!'
+            ].join('')
         },
         '->',
         {
