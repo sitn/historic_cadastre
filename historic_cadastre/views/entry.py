@@ -3,7 +3,7 @@ from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPNotFound
 
 from historic_cadastre.models import DBSession
-from historic_cadastre.models import VPlanGraphique, Servitude, CadastreGraphique
+from historic_cadastre.models import VPlanGraphique, Servitude, CadastreGraphique, VPlanDistr
 
 class Entry(object):
 
@@ -39,7 +39,8 @@ class Entry(object):
         mapper = {
             'graphique': VPlanGraphique,
             'servitude': Servitude,
-            'cadastre_graphique': CadastreGraphique
+            'cadastre_graphique': CadastreGraphique,
+            'distribution': VPlanDistr
         }
 
 
@@ -74,6 +75,7 @@ class Entry(object):
             type_plan_ = type_plan[params.type_plan[0:1]]
         else:
             type_plan_ = params.type_plan
+
 
         if params.echelle:
             echelle = params.echelle
