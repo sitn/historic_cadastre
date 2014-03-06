@@ -46,11 +46,32 @@ Ext.onReady(function() {
     xmax = xmax * ${plan_resolution};
     ymax = ymax * ${plan_resolution};
 
+    // Check if it is actually defined....
+
+    var img_size = new OpenLayers.Size(${plan_largeur},${plan_hauteur});
+
+    if (img_size.w == 0 && img_size.h == 0) {
+        new Ext.Window({
+            title: 'Image non-disponible',
+            resizable: false,
+            modal: true,
+            closable: false,
+            width: 400,
+            height: 200,
+            bodyStyle: 'padding: 5px;',
+            html: [
+                '<h1>Information</h1>',
+                '<br /><br />',
+                '<p>Cette image n\'est malheureusement pas disponible.</p>'
+            ].join('')
+        }).show();
+    }
+
     var image_layer = new OpenLayers.Layer.Image(
         'the_image',
         '${plan_url}',
         new  OpenLayers.Bounds(xmin, ymin, xmax, ymax),
-        new OpenLayers.Size(${plan_largeur},${plan_hauteur})
+        img_size
     );
 
     map.addLayer(image_layer);
