@@ -32,3 +32,9 @@ class CadastreGraphique(Base):
     __tablename__ ='cadastres_graphiques'
     __table_args__ = {'schema': 'plan_histo', 'autoload': True}
     id_plan = Column('id_plan', Integer, primary_key=True)
+
+class VPlanDistr(Base):
+    __label__ = 'v_plan_distr'
+    __tablename__ ='v_plan_distr'
+    __table_args__ = {'schema': 'plan_histo', 'autoload': True}
+    id_plan = Column('id_plan', Integer, primary_key=True)
