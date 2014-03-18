@@ -12,7 +12,16 @@ Ext.onReady(function() {
     // GeoExt global settings
     GeoExt.Lang.set("fr");
 
-    var scales = [100, 250, 500, 1000, 2000, 5000, 10000];
+    var scales = [100, 250, 500, 1000, 2000, 2500, 5000, 10000];
+
+    // Determine zoom level
+    var zoom;
+    if (scales.indexOf(${echelle}) == -1) {
+        zoom = 4;
+    } else {
+        zoom = scales.indexOf(${echelle});
+        zoom = scales.length - 1 - zoom;
+    }
 
     var map = new OpenLayers.Map({
         theme: null,
@@ -26,7 +35,6 @@ Ext.onReady(function() {
                 dragPanOptions: {enableKinetic: true}
             }),
             new OpenLayers.Control.PanZoomBar({panIcons: false}),
-//            new OpenLayers.Control.MousePosition({numDigits: 0}),
             new OpenLayers.Control.ScaleLine({
                 geodesic: true,
                 bottomInUnits: false,
@@ -114,7 +122,7 @@ Ext.onReady(function() {
         stateId: "map",
         map: map,
         center: new OpenLayers.LonLat(0, 0),
-        zoom: 3,
+        zoom: zoom,
         region: "center",
         tbar: new Ext.Toolbar({
             cls: 'map-toolbar'
