@@ -1,0 +1,4 @@
+Current version is:
+    - jquery: 1.11.0
+    - jquery-ui: 1.10.4
+    - DataTables:1.9.4
