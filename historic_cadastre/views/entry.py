@@ -4,6 +4,7 @@ from pyramid.httpexceptions import HTTPNotFound
 
 from historic_cadastre.models import DBSession
 from historic_cadastre.models import VPlanGraphique, Servitude, CadastreGraphique, VPlanDistr
+from historic_cadastre.models import VPlanMut
 
 class Entry(object):
 
@@ -40,7 +41,8 @@ class Entry(object):
             'graphique': VPlanGraphique,
             'servitude': Servitude,
             'cadastre_graphique': CadastreGraphique,
-            'distribution': VPlanDistr
+            'distribution': VPlanDistr,
+            'mutation': VPlanMut
         }
 
 
@@ -71,11 +73,13 @@ class Entry(object):
 
         self.request.response.content_type = 'application/javascript'
 
-        if params.type_plan[0:1] in type_plan.keys():
-            type_plan_ = type_plan[params.type_plan[0:1]]
-        else:
-            type_plan_ = params.type_plan
+        type_plan_ = None
 
+        if 'type_plan' in params.__table__.c.keys():
+            if params.type_plan[0:1] in type_plan.keys():
+                type_plan_ = type_plan[params.type_plan[0:1]]
+            else:
+                type_plan_ = params.type_plan
 
         if params.echelle:
             echelle = params.echelle
