@@ -33,12 +33,16 @@ def main(global_config, **settings):
     config.add_route('home', '/')
     config.add_route('viewer', '/viewer.js')
     config.add_route('image_proxy','/img/{type}/{id}')
+    config.add_route('pdf_proxy','/pdf/{type}/{id}')
 
     # print proxy routes
     config.add_route('printproxy', '/printproxy')
     config.add_route('printproxy_info', '/printproxy/info.json')
     config.add_route('printproxy_create', '/printproxy/create.json')
     config.add_route('printproxy_get', '/printproxy/{file}.printout')
+
+    # mutation
+    config.add_route('mutation_list', '/mutation/list')
 
     config.scan()
     return config.make_wsgi_app()
