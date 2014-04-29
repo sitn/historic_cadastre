@@ -134,10 +134,10 @@ Ext.onReady(function() {
 
     tbar.addItem({
             xtype: 'tbtext',
-% if echelle:
+% if type_plan:
             text: '<b>Cadastre</b>: ${nomcad} - <b>Plan</b> n° ${no_plan}, ${type_plan}, échelle de base 1:${echelle}',
 % else:
-            text: '<b>Cadastre</b>: ${nomcad} - <b>Plan</b> n° ${no_plan}, ${type_plan}',
+            text: '<b>Cadastre</b>: ${nomcad} - <b>Plan</b> n° ${no_plan}, échelle de base 1:${echelle}',
 % endif
             style: 'font-size:11.5px;'
     });
@@ -162,6 +162,7 @@ Ext.onReady(function() {
     var options = {
         'cadastre': '${nomcad}'.trim(),
         'no_plan': '${no_plan}',
+        'echelle': '${echelle}',
     % if type_plan:
         'type_plan': '${type_plan}'
     % else:

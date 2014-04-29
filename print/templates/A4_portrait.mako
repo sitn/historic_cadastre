@@ -40,7 +40,7 @@
           width: 250
           items:
             - !text
-              text: 'Cadastre: <%text>$</%text>{cadastre} - Plan n° <%text>$</%text>{no_plan}, <%text>$</%text>{type_plan}'
+              text: 'Cadastre: <%text>$</%text>{cadastre} - Plan n° <%text>$</%text>{no_plan}, échelle de base 1:<%text>$</%text>{echelle}, <%text>$</%text>{type_plan}'
               fontSize: 8
               align: left
               vertAlign: top
@@ -51,7 +51,7 @@
           width: 200
           items:
             - !text
-              text: 'Impression du : <%text>$</%text>{now dd.MM.yyyy HH:mm:ss}'
+              text: 'Impression du : <%text>$</%text>{now dd.MM.yyyy HH:mm:ss} - '
               fontSize: 6
         # Title
         - !columns
