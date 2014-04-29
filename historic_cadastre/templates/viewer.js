@@ -162,7 +162,11 @@ Ext.onReady(function() {
     var options = {
         'cadastre': '${nomcad}'.trim(),
         'no_plan': '${no_plan}',
+    % if type_plan:
         'type_plan': '${type_plan}'
+    % else:
+        'type_plan': ''
+    % endif
     };
 % else:
     var option;

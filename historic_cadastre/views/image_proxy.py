@@ -6,6 +6,7 @@ from pyramid.response import FileResponse
 
 from historic_cadastre.models import DBSession
 from historic_cadastre.models import VPlanGraphique, Servitude, CadastreGraphique, VPlanDistr
+from historic_cadastre.models import VPlanMut
 
 import logging
 import os
@@ -19,7 +20,8 @@ def image_proxy(request):
         'graphique': VPlanGraphique,
         'servitude': Servitude,
         'cadastre_graphique': CadastreGraphique,
-        'distribution': VPlanDistr
+        'distribution': VPlanDistr,
+        'mutation': VPlanMut
     }
 
     type = request.matchdict['type']
