@@ -51,7 +51,7 @@
           width: 200
           items:
             - !text
-              text: 'Impression du : <%text>$</%text>{now dd.MM.yyyy HH:mm:ss} - '
+              text: 'Impression du : <%text>$</%text>{now dd.MM.yyyy HH:mm:ss}'
               fontSize: 6
         # Title
         - !columns
