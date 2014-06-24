@@ -14,6 +14,7 @@ Ext.onReady(function() {
 
     var scales = [100, 250, 500, 1000, 2000, 2500, 5000, 10000];
 
+% if echelle:
     // Determine zoom level
     var zoom;
     if (scales.indexOf(${echelle}) == -1) {
@@ -22,6 +23,9 @@ Ext.onReady(function() {
         zoom = scales.indexOf(${echelle});
         zoom = scales.length - 1 - zoom;
     }
+% else:
+    var zoom = 4;
+% endif
 
     var map = new OpenLayers.Map({
         theme: null,
@@ -135,9 +139,17 @@ Ext.onReady(function() {
     tbar.addItem({
             xtype: 'tbtext',
 % if type_plan:
+    % if echelle:
             text: '<b>Cadastre</b>: ${nomcad} - <b>Plan</b> n° ${no_plan}, ${type_plan}, échelle de base 1:${echelle}',
+    % else:
+            text: '<b>Cadastre</b>: ${nomcad} - <b>Plan</b> n° ${no_plan}, ${type_plan}, échelle non-renseignée',
+    % endif
 % else:
+    % if echelle:
             text: '<b>Cadastre</b>: ${nomcad} - <b>Plan</b> n° ${no_plan}, échelle de base 1:${echelle}',
+    % else:
+            text: '<b>Cadastre</b>: ${nomcad} - <b>Plan</b> n° ${no_plan}, échelle non-renseignée',
+    % endif
 % endif
             style: 'font-size:11.5px;'
     });
@@ -162,7 +174,11 @@ Ext.onReady(function() {
     var options = {
         'cadastre': '${nomcad}'.trim(),
         'no_plan': '${no_plan}',
+    % if echelle:
         'echelle': '${echelle}',
+    % else:
+        'echelle': 'échelle non-renseignée',
+    % endif
     % if type_plan:
         'type_plan': '${type_plan}'
     % else:
