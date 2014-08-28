@@ -1,8 +1,9 @@
+﻿$(document).ready(function() {            
+    
 
-$(document).ready(function() {
     /* Build the DataTable with third column using our custom sort functions */
     $('#mutation').dataTable({
-        "aaSorting": [[0, 'asc'], [1, 'asc']],
+        "aaSorting": [[0, 'asc'], [1, 'asc'], [4,'Date']],
         "aoColumns": [
             {"sType": 'numeric'},
             {"sType": 'numeric'},

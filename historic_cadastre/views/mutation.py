@@ -4,7 +4,7 @@ from pyramid.httpexceptions import HTTPNotFound
 
 from historic_cadastre.models import DBSession
 from historic_cadastre.models import VPlanMut
-
+import datetime
 
 @view_config(route_name='mutation_list', renderer='mutations_list.html')
 def mutation_list(request):
@@ -36,19 +36,22 @@ def mutation_list(request):
 
         date_plan = result.date_plan
         if date_plan:
-            date_plan = date_plan.strftime("%d.%m.%Y")
+            date_plan = dateToString(date_plan)
+            #date_plan = result.date_plan.isoformat()
         else:
             date_plan = '-'
 
         date_acte = result.date_acte
         if date_acte:
-            date_acte = date_acte.strftime("%d.%m.%Y")
+            #date_acte = dateToString(date_acte)
+            date_acte =result.date_acte.isoformat()
         else:
             date_acte = '-'
 
         date_depot = result.date_depot
         if date_depot:
-            date_depot = date_depot.strftime("%d.%m.%Y")
+            #date_depot = dateToString(date_depot)
+            date_depot = result.date_depot.isoformat()
         else:
             date_depot = '-'
 
@@ -77,3 +80,10 @@ def mutation_list(request):
         })
 
     return {'list': list, 'code':code, 'debug':debug}
+    
+def dateToString(date):
+    
+    theDate = date.isoformat().split('-')
+    #strDate = theDate[1] + '.' + theDate[2] + '.' + theDate[0]
+    strDate = theDate[1] + '.' + theDate[2] + '.' + theDate[0]
+    return datetime.datetime(int(theDate[0]), int(theDate[1]), int(theDate[2]))
