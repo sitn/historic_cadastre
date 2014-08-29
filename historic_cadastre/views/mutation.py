@@ -37,23 +37,20 @@ def mutation_list(request):
         date_plan = result.date_plan
         if date_plan:
             date_plan = dateToString(date_plan)
-            #date_plan = result.date_plan.isoformat()
         else:
-            date_plan = '-'
+            date_plan = ''
 
         date_acte = result.date_acte
         if date_acte:
-            #date_acte = dateToString(date_acte)
-            date_acte =result.date_acte.isoformat()
+            date_acte = dateToString(date_acte)
         else:
-            date_acte = '-'
+            date_acte = ''
 
         date_depot = result.date_depot
         if date_depot:
-            #date_depot = dateToString(date_depot)
-            date_depot = result.date_depot.isoformat()
+            date_depot = dateToString(date_depot)
         else:
-            date_depot = '-'
+            date_depot = ''
 
         req_bidon = result.req_bidon
         if req_bidon:
@@ -83,7 +80,5 @@ def mutation_list(request):
     
 def dateToString(date):
     
-    theDate = date.isoformat().split('-')
-    #strDate = theDate[1] + '.' + theDate[2] + '.' + theDate[0]
-    strDate = theDate[1] + '.' + theDate[2] + '.' + theDate[0]
-    return datetime.datetime(int(theDate[0]), int(theDate[1]), int(theDate[2]))
+    strDate = date.isoformat()[8:10] + '.' + date.isoformat()[5:7] + '.' + date.isoformat()[:4]
+    return strDate

@@ -102,7 +102,7 @@
                         <td align="center">${result['indice']}</td>
                         <td align="center">${result['req_tot']}</td>
                         <td align="center">${result['req_bidon']}</td>
-                        <td align="center">${str(result['date_plan'])[0:10].replace('-','.')}</td>
+                        <td align="center">${result['date_plan']}</td>
                         <td align="center">${result['date_acte']}</td>
                         <td align="center">${result['date_depot']}</td>
                         <td align="center"><a href="${request.route_url('home')}/?id=${result['id']}&type=mutation&code=${code}" target="_blank">Plan</a></td>
