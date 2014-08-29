@@ -27,7 +27,7 @@
 
      /* Build the DataTable with third column using our custom sort functions */
     $('#mutation').dataTable({
-        "aaSorting": [[0, 'asc'], [1, 'asc'], [4,'Date']],
+        "aaSorting": [[0, 'asc'], [1, 'asc']],
         "aoColumns": [
             {"sType": 'numeric'},
             {"sType": 'numeric'},
