@@ -23,7 +23,7 @@
     "date-euro-desc": function ( a, b ) {
         return b - a;
     }
-} );
+    });
 
      /* Build the DataTable with third column using our custom sort functions */
     $('#mutation').dataTable({
