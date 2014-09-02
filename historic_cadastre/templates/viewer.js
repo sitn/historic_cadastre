@@ -1,4 +1,14 @@
 Ext.onReady(function() {
+
+    if ('${plan_largeur}' === 'None') {
+        Ext.get('loading').remove();
+        Ext.fly('loading-mask').fadeOut({
+            remove: true
+        });
+        Ext.get('no-image').setVisible(true);
+        return;
+    }
+
     // Ext global settings
     Ext.BLANK_IMAGE_URL = "${request.static_url('historic_cadastre:static/lib/ext/resources/images/default/s.gif')}";
     Ext.QuickTips.init();
