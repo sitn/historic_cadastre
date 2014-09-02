@@ -12,7 +12,7 @@
 
         <link rel="shortcut icon" type="image/x-icon" href="${request.static_url('historic_cadastre:static/images/favicon.ico')}">
 
-         <link rel="stylesheet" type="text/css" href="${request.static_url('historic_cadastre:static/lib/ext/resources/css/ext-all.css')}" />
+        <link rel="stylesheet" type="text/css" href="${request.static_url('historic_cadastre:static/lib/ext/resources/css/ext-all.css')}" />
         <link rel="stylesheet" type="text/css" href="${request.static_url('historic_cadastre:static/lib/ext/resources/css/xtheme-gray.css')}" />
         <link rel="stylesheet" type="text/css" href="${request.static_url('historic_cadastre:static/css/main.css')}" />
         <link rel="stylesheet" type="text/css" href="${request.static_url('historic_cadastre:static/lib/jquery/DataTables/media/css/jquery.dataTables.css')}" />
@@ -56,6 +56,7 @@
             border-style: solid;
             border-color: gray;
             -moz-border-radius;
+            background-color: #ddd;
         }
         table.timetable tr:hover {
             background-color: #ddd;
@@ -69,10 +70,10 @@
         <table width="100%">
                 <tr>
                     <td align="left" valign="top" style="height: 37px;">
-                        <img src="http://sitn.ne.ch/historic_cadastre/static/images/banner_left.png" alt="" align="top" /></td>
+                        <img src="${request.static_url('historic_cadastre:static/images/banner_left.png')}" alt="" align="top" /></td>
                    <td rowspan="2" valign="top" align="right">
                         <a href="http://www.ne.ch" target=_blank>
-                            <img src="http://sitn.ne.ch/historic_cadastre/static/images/banner_right.png" alt="" />
+                            <img src="${request.static_url('historic_cadastre:static/images/banner_right.png')}" alt="" />
                         </a>
                    </td>
                 </tr>
