@@ -9,6 +9,7 @@ development.ini
 production.ini
 *.egg-info/
 buildout_historic_cadastre.cfg
+buildout_nesitn5.cfg
 historic_cadastre/static/build/*.js
 print/config.yaml
 print/templates/print.mako
