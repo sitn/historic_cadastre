@@ -37,10 +37,10 @@
           condition: showDescription
           absoluteX: 20
           absoluteY: 93
-          width: 250
+          width: 400
           items:
             - !text
-              text: 'Cadastre: <%text>$</%text>{cadastre} - Plan n° <%text>$</%text>{no_plan}, échelle de base 1:<%text>$</%text>{echelle}, <%text>$</%text>{type_plan}'
+              text: 'Cadastre: <%text>$</%text>{cadastre} – Folio <%text>$</%text>{nom_folio} – Plan de mutation n° <%text>$</%text>{no_plan}, échelle de base 1:<%text>$</%text>{echelle}, <%text>$</%text>{type_plan}'
               fontSize: 8
               align: left
               vertAlign: top
