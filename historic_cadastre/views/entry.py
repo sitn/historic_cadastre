@@ -85,10 +85,15 @@ class Entry(object):
             echelle = params.echelle
         else:
             echelle = None
+        
+        if params.nom_plan:
+            list_folio = params.nom_plan.split('_')
+            nom_folio = list_folio[1]
 
         return {
             'debug': self.debug,
             'id_plan': id_plan,
+            'nom_folio':nom_folio,
             'plan_largeur': params.larg,
             'plan_hauteur': params.haut,
             'plan_resolution': params.resol,
