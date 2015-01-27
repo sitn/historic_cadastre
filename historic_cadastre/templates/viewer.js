@@ -150,15 +150,15 @@ Ext.onReady(function() {
             xtype: 'tbtext',
 % if type_plan:
     % if echelle:
-            text: '<b>Cadastre</b>: ${nomcad} - <b>Plan</b> n° ${no_plan}, ${type_plan}, échelle de base 1:${echelle}',
+            text: '<b>Cadastre</b>: ${nomcad} - <b>Folio</b>: ${nom_folio} - <b>Plan de mutation</b> n° ${no_plan}, ${type_plan}, échelle de base 1:${echelle}',
     % else:
-            text: '<b>Cadastre</b>: ${nomcad} - <b>Plan</b> n° ${no_plan}, ${type_plan}, échelle non-renseignée',
+            text: '<b>Cadastre</b>: ${nomcad} - <b>Folio</b>: ${nom_folio} - <b>Plan de mutation</b> n° ${no_plan}, ${type_plan}, échelle non-renseignée',
     % endif
 % else:
     % if echelle:
-            text: '<b>Cadastre</b>: ${nomcad} - <b>Plan</b> n° ${no_plan}, échelle de base 1:${echelle}',
+            text: '<b>Cadastre</b>: ${nomcad} - <b>Folio</b>: ${nom_folio} - <b>Plan de mutation</b> n° ${no_plan}, échelle de base 1:${echelle}',
     % else:
-            text: '<b>Cadastre</b>: ${nomcad} - <b>Plan</b> n° ${no_plan}, échelle non-renseignée',
+            text: '<b>Cadastre</b>: ${nomcad} - <b>Folio</b>: ${nom_folio} - <b>Plan de mutation</b> n° ${no_plan}, échelle non-renseignée',
     % endif
 % endif
             style: 'font-size:11.5px;'
@@ -184,6 +184,7 @@ Ext.onReady(function() {
     var options = {
         'cadastre': '${nomcad}'.trim(),
         'no_plan': '${no_plan}',
+        'nom_folio': '${nom_folio}',
     % if echelle:
         'echelle': '${echelle}',
     % else:
