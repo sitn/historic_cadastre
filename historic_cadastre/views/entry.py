@@ -85,10 +85,14 @@ class Entry(object):
             echelle = params.echelle
         else:
             echelle = None
-        
-        if params.nom_plan:
-            list_folio = params.nom_plan.split('_')
-            nom_folio = list_folio[1]
+
+        if type_ == 'servitude' or type_ == 'cadastre_graphique':
+            list_folio = params.id_plan.split('_')
+            nom_folio = list_folio[2]
+        else:
+            if params.nom_plan:
+                list_folio = params.nom_plan.split('_')
+                nom_folio = list_folio[1]
 
         return {
             'debug': self.debug,
