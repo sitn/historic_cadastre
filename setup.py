@@ -20,10 +20,10 @@ setup(
         'transaction',
         'pyramid_tm',
         'pyramid_debugtoolbar',
+        'pyramid-mako',
         'zope.sqlalchemy',
         'waitress',
         'sqlahelper',
-        'papyrus',
         'JSTools',
         'httplib2',
         'simplejson'
