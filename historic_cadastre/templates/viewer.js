@@ -159,15 +159,15 @@ Ext.onReady(function() {
 
 % if type_plan:
     % if echelle:
-    txt += ', ${type_plan}, échelle de base 1:${echelle}',
+    txt += ', ${type_plan}, échelle de base 1:${echelle}';
     % else:
-    txt += ', ${type_plan}, échelle non-renseignée',
+    txt += ', ${type_plan}, échelle non-renseignée';
     % endif
 % else:
     % if echelle:
-    txt += ', échelle de base 1:${echelle}',
+    txt += ', échelle de base 1:${echelle}';
     % else:
-    txt += ', échelle non-renseignée',
+    txt += ', échelle non-renseignée';
     % endif
 % endif
 
@@ -192,7 +192,7 @@ Ext.onReady(function() {
     
     var url = "${request.route_url('printproxy')}";
     var print_window;
-    toto = txt
+
     txt = txt.replace(/<b>/g, "");
     txt = txt.replace(/<\/b>/g, "");
 
