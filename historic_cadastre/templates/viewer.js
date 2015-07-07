@@ -146,22 +146,35 @@ Ext.onReady(function() {
 
     var tbar = mapPanel.getTopToolbar();
 
-    tbar.addItem({
-            xtype: 'tbtext',
+    var txt = "<b>Cadastre</b>: ${nomcad} - <b>Folio</b>: ${nom_folio} - ";
+% if type_ == u'graphique':
+    txt += "<b>Plan cadastral</b>";
+% elif type_ == u'distribution':
+    txt += "<b>Plan de distribution/répartition</b>";
+% elif type_ == u'mutation':
+    txt += "<b>Plan de mutation</b> n° ${no_plan}";
+% elif type_ == u'servitude':
+    txt += "<b>Plan de servitude</b> n° ${no_plan}";
+% endif
+
 % if type_plan:
     % if echelle:
-            text: '<b>Cadastre</b>: ${nomcad} - <b>Folio</b>: ${nom_folio} - <b>Plan de mutation</b> n° ${no_plan}, ${type_plan}, échelle de base 1:${echelle}',
+    txt += ', ${type_plan}, échelle de base 1:${echelle}';
     % else:
-            text: '<b>Cadastre</b>: ${nomcad} - <b>Folio</b>: ${nom_folio} - <b>Plan de mutation</b> n° ${no_plan}, ${type_plan}, échelle non-renseignée',
+    txt += ', ${type_plan}, échelle non-renseignée';
     % endif
 % else:
     % if echelle:
-            text: '<b>Cadastre</b>: ${nomcad} - <b>Folio</b>: ${nom_folio} - <b>Plan de mutation</b> n° ${no_plan}, échelle de base 1:${echelle}',
+    txt += ', échelle de base 1:${echelle}';
     % else:
-            text: '<b>Cadastre</b>: ${nomcad} - <b>Folio</b>: ${nom_folio} - <b>Plan de mutation</b> n° ${no_plan}, échelle non-renseignée',
+    txt += ', échelle non-renseignée';
     % endif
 % endif
-            style: 'font-size:11.5px;'
+
+    tbar.addItem({
+        xtype: 'tbtext',
+        text: txt,
+        style: 'font-size:11.5px;'
     });
     tbar.addItem(' ');
     tbar.addItem('-');
@@ -180,6 +193,9 @@ Ext.onReady(function() {
     var url = "${request.route_url('printproxy')}";
     var print_window;
 
+    txt = txt.replace(/<b>/g, "");
+    txt = txt.replace(/<\/b>/g, "");
+
 % if nomcad:
     var options = {
         'cadastre': '${nomcad}'.trim(),
@@ -191,10 +207,11 @@ Ext.onReady(function() {
         'echelle': 'échelle non-renseignée',
     % endif
     % if type_plan:
-        'type_plan': '${type_plan}'
+        'type_plan': '${type_plan}',
     % else:
-        'type_plan': ''
+        'type_plan': '',
     % endif
+        'txtDescription': txt
     };
 % else:
     var option;

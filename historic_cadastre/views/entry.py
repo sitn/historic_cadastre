@@ -105,5 +105,6 @@ class Entry(object):
             'nomcad': params.cadastre,
             'no_plan': params.plan,
             'type_plan': type_plan_,
-            'echelle': echelle
+            'echelle': echelle,
+            'type_': type_
         }
