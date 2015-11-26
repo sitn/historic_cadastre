@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from pyramid.config import Configurator
-from pyramid.mako_templating import renderer_factory as mako_renderer_factory
+from pyramid_mako import add_mako_renderer
 
 from sqlalchemy import engine_from_config
 
@@ -25,8 +25,10 @@ def main(global_config, **settings):
 
     config = Configurator(settings=settings)
     
-    config.add_renderer('.html', mako_renderer_factory)
-    config.add_renderer('.js', mako_renderer_factory)
+    config.include('pyramid_mako')
+
+    config.add_mako_renderer('.html')
+    config.add_mako_renderer('.js')
     
     config.add_static_view('static', 'static', cache_max_age=3600)
 

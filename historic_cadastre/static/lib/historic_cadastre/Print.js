@@ -43,7 +43,7 @@ historic_cadastre.PrintWindow = function(button, mapPanel, url, options) {
 
 historic_cadastre.Print = function(mapPanel, printWin, options) {
 
-    var printUrl =options.printUrl
+    var printUrl = options.printUrl;
     delete options['printUrl'];
 
     var  printProvider = new GeoExt.data.PrintProvider({
