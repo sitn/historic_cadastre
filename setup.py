@@ -30,10 +30,6 @@ setup(
     ],
     packages=find_packages(exclude=['ez_setup']),
     include_package_data=True,
-    message_extractors={'historic_cadastre': [
-          ('static/**', 'ignore', None),
-          ('**.py', 'python', None),
-          ('templates/**', 'mako', {'input_encoding': 'utf-8'})]},
     zip_safe=False,
     entry_points={
         'paste.app_factory': [
