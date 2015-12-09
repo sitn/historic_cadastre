@@ -4,6 +4,7 @@ from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
 
+
 def init(engine):
     """
 Initialize the db reflection module. Give the declarative base

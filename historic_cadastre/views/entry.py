@@ -3,8 +3,10 @@ from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPNotFound
 
 from historic_cadastre.models import DBSession
-from historic_cadastre.models import VPlanGraphique, Servitude, CadastreGraphique, VPlanDistr
+from historic_cadastre.models import VPlanGraphique, Servitude
+from historic_cadastre.models import CadastreGraphique, VPlanDistr
 from historic_cadastre.models import VPlanMut
+
 
 class Entry(object):
 
@@ -45,7 +47,6 @@ class Entry(object):
             'mutation': VPlanMut
         }
 
-
         type_plan = {
             'o': u'original',
             'm': u'muté',
@@ -66,7 +67,11 @@ class Entry(object):
 
         params = DBSession.query(mapped_class).get(id_plan)
 
-        plan_url = self.request.route_url('image_proxy', type=type_, id=id_plan)
+        plan_url = self.request.route_url(
+            'image_proxy',
+            type=type_,
+            id=id_plan
+        )
 
         if code:
             plan_url += '?code=' + code
@@ -97,7 +102,7 @@ class Entry(object):
         return {
             'debug': self.debug,
             'id_plan': id_plan,
-            'nom_folio':nom_folio,
+            'nom_folio': nom_folio,
             'plan_largeur': params.larg,
             'plan_hauteur': params.haut,
             'plan_resolution': params.resol,

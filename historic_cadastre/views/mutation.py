@@ -4,7 +4,7 @@ from pyramid.httpexceptions import HTTPNotFound
 
 from historic_cadastre.models import DBSession
 from historic_cadastre.models import VPlanMut
-import datetime
+
 
 @view_config(route_name='mutation_list', renderer='mutations_list.html')
 def mutation_list(request):
@@ -28,7 +28,8 @@ def mutation_list(request):
 
     list = []
 
-    qq = DBSession.query(VPlanMut).filter(VPlanMut.id_cad_geom==int(id)).order_by(VPlanMut.plan)
+    qq = DBSession.query(VPlanMut).filter(VPlanMut.id_cad_geom == int(id)) \
+        .order_by(VPlanMut.plan)
 
     results = qq.all()
 
@@ -76,9 +77,11 @@ def mutation_list(request):
             'chemin_desi': result.chemin_desi
         })
 
-    return {'list': list, 'code':code, 'debug':debug}
-    
+    return {'list': list, 'code': code, 'debug': debug}
+
+
 def dateToString(date):
-    
-    strDate = date.isoformat()[8:10] + '.' + date.isoformat()[5:7] + '.' + date.isoformat()[:4]
+
+    strDate = date.isoformat()[8:10] + '.' + date.isoformat()[5:7] + '.' + \
+        date.isoformat()[:4]
     return strDate

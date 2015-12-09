@@ -5,13 +5,15 @@ from pyramid.httpexceptions import HTTPNotFound
 from pyramid.response import FileResponse
 
 from historic_cadastre.models import DBSession
-from historic_cadastre.models import VPlanGraphique, Servitude, CadastreGraphique, VPlanDistr
+from historic_cadastre.models import VPlanGraphique, Servitude
+from historic_cadastre.models import CadastreGraphique, VPlanDistr
 from historic_cadastre.models import VPlanMut
 
 import logging
 import os
 
 log = logging.getLogger(__name__)
+
 
 @view_config(route_name='image_proxy')
 def image_proxy(request):
@@ -59,7 +61,11 @@ def image_proxy(request):
 
     log.info("Get image with id = %s." % id_img)
 
-    file = os.path.join(request.registry.settings[registry_string], db_filepath)
+    file = os.path.join(
+        request.registry.settings[registry_string],
+        db_filepath
+    )
+
     fileName, fileExtension = os.path.splitext(file)
 
     extension = {
@@ -72,6 +78,6 @@ def image_proxy(request):
 
     return FileResponse(
         file,
-        request = request,
-        content_type = extension[fileExtension.lower()]
+        request=request,
+        content_type=extension[fileExtension.lower()]
     )
