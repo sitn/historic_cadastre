@@ -26,7 +26,8 @@ setup(
         'sqlahelper',
         'JSTools',
         'httplib2',
-        'simplejson'
+        'simplejson',
+        'flake8',
     ],
     packages=find_packages(exclude=['ez_setup']),
     include_package_data=True,
