@@ -49,12 +49,12 @@ class Entry(object):
         type_plan = {
             'o': u'original',
             'm': u'muté',
-            'r': u'remanié',
+            'rp': u'remanié',
             'c': u'copié',
-            'to': u'minute',
-            'ta': u'plaque alu',
-            'trp': u'minute remaniée',
-            'tc': u'minute copiée'
+            't': u'minute',
+            'p': u'plaque alu',
+            'n': u'minute remaniée',
+            'b': u'minute copiée'
         }
 
         id_plan = self.request.params['id_plan']
@@ -82,8 +82,6 @@ class Entry(object):
         if 'type_plan' in params.__table__.c.keys():
             if params.type_plan[0:1] in type_plan.keys():
                 type_plan_ = type_plan[params.type_plan[0:1]]
-            elif params.type_plan in type_plan.keys():
-                type_plan_ = type_plan[params.type_plan]
             else:
                 type_plan_ = params.type_plan
 
