@@ -27,21 +27,21 @@ hosts:
   - !localMatch
     dummy: true
   - !dnsMatch
-    host: ${vars:host}
+    host: ${host}
     port: 80 
   - !dnsMatch
-    host: ${vars:host}
+    host: ${host}
     port: 80
   - !dnsMatch
-    host: ${vars:host}
-    port: ${vars:waitress_port}
+    host: ${host}
+    port: ${waitress_port}
   - !dnsMatch
     host: sitn.ne.ch
     port: 80
 
 localHostForward:
     from:
-        - ${vars:host}
+        - ${host}
     https2http: True
 
 #===========================================================================
@@ -61,13 +61,13 @@ globalParallelFetches: 1
 layouts:
 
 ## A4 portrait default
-<%include file="/A4_portrait.mako" />
+<%include file="templates/A4_portrait.mako" />
 
 ## A4 landscape default
-<%include file="/A4_landscape.mako" />
+<%include file="templates/A4_landscape.mako" />
 
 ## A3 landscape default
-<%include file="/A3_landscape.mako" />
+<%include file="templates/A3_landscape.mako" />
 
 ## A3 portrait default
-<%include file="/A3_portrait.mako" />
+<%include file="templates/A3_portrait.mako" />

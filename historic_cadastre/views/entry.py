@@ -50,8 +50,12 @@ class Entry(object):
         type_plan = {
             'o': u'original',
             'm': u'muté',
-            'r': u'remanié',
-            'c': u'copié'
+            'rp': u'remanié',
+            'c': u'copié',
+            't': u'minute',
+            'p': u'plaque alu',
+            'n': u'minute remaniée',
+            'b': u'minute copiée'
         }
 
         id_plan = self.request.params['id_plan']

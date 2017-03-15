@@ -3,6 +3,10 @@
 from pyramid.config import Configurator
 from sqlalchemy import engine_from_config
 import sqlahelper
+
+import pyramid_tm
+import yaml
+
 from historic_cadastre.lib import dbreflection
 
 
@@ -10,22 +14,19 @@ def main(global_config, **settings):
     """ This function returns a Pyramid WSGI application.
     """
 
-    engine = engine_from_config(
-        settings,
-        'sqlalchemy.')
-    sqlahelper.add_engine(engine)
+    config = Configurator(settings=settings)
+    settings = config.get_settings()
+    settings.update(yaml.load(file(settings.get("app.cfg"))))
 
+    add_mako_renderer(config, ".html")
+    add_mako_renderer(config, ".js")
+
+    engine = engine_from_config(settings, 'sqlalchemy.')
+    sqlahelper.add_engine(engine)
     dbreflection.init(engine)
 
-    settings.setdefault('mako.directories', 'historic_cadastre:templates')
-    settings.setdefault('reload_templates', True)
-
-    config = Configurator(settings=settings)
-
     config.include('pyramid_mako')
-
-    config.add_mako_renderer('.html')
-    config.add_mako_renderer('.js')
+    config.include(pyramid_tm.includeme)
 
     config.add_static_view('static', 'static', cache_max_age=3600)
 
