@@ -1,0 +1,42 @@
+vars:
+    # project instance id
+    instanceid: INSTANCE_ID
+    # the package name
+    package: historic_cadastre
+    # url-path where the instance must respond.
+    apache_entry_point: APACHE_ENTRY_POINT
+    # database user
+    dbuser: overwriteme
+    # database password
+    dbpassword: overwriteme
+    # database host
+    dbhost: overwriteme
+    # database port
+    dbport: overwriteme
+    # database name
+    db: overwriteme
+
+    host: localhost
+
+    waitress_port: 6543
+
+    image_server_graphique: overwriteme
+    image_server_mutation: overwriteme
+    image_server_servitudes: overwriteme
+    image_server_cadastre_graphique: overwriteme
+    intranet_code: overwriteme
+
+    directory: __import__('os').getcwd()
+    python_path: __import__('distutils').sysconfig.get_python_lib()
+
+    sqlalchemy:
+        url: postgresql://{dbuser}:{dbpassword}@{dbhost}:{dbport}/{db}
+        
+    print_url: http://localhost:8080/print-{instanceid}/pdf/
+
+interpreted:
+    python:
+    - python_path
+    - directory
+    environment:
+    - instanceid
