@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from pyramid.config import Configurator
+from pyramid_mako import add_mako_renderer
 from sqlalchemy import engine_from_config
 import sqlahelper
 
@@ -32,7 +33,7 @@ def main(global_config, **settings):
 
     config.add_route('home', '/')
     config.add_route('viewer', '/viewer.js')
-    config.add_route('image_proxy',  '/img/{type}/{id}')
+    config.add_route('image_proxy', '/img/{type}/{id}')
     config.add_route('pdf_proxy', '/pdf/{type}/{id}')
 
     # print proxy routes
