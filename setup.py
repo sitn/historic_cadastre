@@ -16,6 +16,7 @@ setup(
     url='http://www.ne.ch/sitn',
     install_requires=[
         'c2c.template',
+        'flake8',
         'httplib2',
         'JSTools',
         'pyramid',

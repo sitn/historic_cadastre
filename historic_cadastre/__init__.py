@@ -2,14 +2,14 @@
 
 from pyramid.config import Configurator
 from pyramid_mako import add_mako_renderer
-
 from sqlalchemy import engine_from_config
-
 import sqlahelper
+
 import pyramid_tm
 import yaml
 
 from historic_cadastre.lib import dbreflection
+
 
 def main(global_config, **settings):
     """ This function returns a Pyramid WSGI application.
@@ -33,8 +33,8 @@ def main(global_config, **settings):
 
     config.add_route('home', '/')
     config.add_route('viewer', '/viewer.js')
-    config.add_route('image_proxy','/img/{type}/{id}')
-    config.add_route('pdf_proxy','/pdf/{type}/{id}')
+    config.add_route('image_proxy', '/img/{type}/{id}')
+    config.add_route('pdf_proxy', '/pdf/{type}/{id}')
 
     # print proxy routes
     config.add_route('printproxy', '/printproxy')
