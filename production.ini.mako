@@ -11,26 +11,15 @@ pyramid.debug_authorization = false
 pyramid.debug_notfound = false
 pyramid.debug_routematch = false
 pyramid.default_locale_name = en
-pyramid.includes =
-    pyramid_tm
 
-sqlalchemy.url = postgresql://${vars:dbuser}:${vars:dbpassword}@${vars:dbhost}:${vars:dbport}/${vars:db}
-jsbuild_cfg = ${jsbuild:config}
-jsbuild_root_dir = ${buildout:directory}
+app.cfg = %(here)s/.build/config.yaml
 
-image_server_graphique = ${vars:image_server_graphique}
-image_server_mutation = ${vars:image_server_mutation}
-image_server_servitudes = ${vars:image_server_servitudes}
-image_server_cadastre_graphique = ${vars:image_server_cadastre_graphique}
-
-print_url = ${vars:print_url}
-
-intranet_code = ${vars:intranet_code}
+mako.directories = historic_cadastre:templates
 
 [server:main]
 use = egg:waitress#main
 host = 0.0.0.0
-port = ${vars:waitress_port}
+port = ${waitress_port}
 
 ###
 # logging configuration
