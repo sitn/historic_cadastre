@@ -2,7 +2,10 @@
 
 from sqlalchemy.ext.declarative import declarative_base
 
+from geoalchemy2 import Geometry # noqa
+
 Base = declarative_base()
+
 
 def init(engine):
     """
