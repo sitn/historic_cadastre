@@ -1,6 +1,6 @@
 Ext.onReady(function() {
-
-    if ('${plan_largeur}' === 'None') {
+    var echelle = ${echelle};
+    if ('${plan_largeur}' === 'None' || echelle === -9999) {
         Ext.get('loading').remove();
         Ext.fly('loading-mask').fadeOut({
             remove: true
@@ -22,7 +22,11 @@ Ext.onReady(function() {
     // GeoExt global settings
     GeoExt.Lang.set("fr");
 
+% if num_dossier and district:
+    var scales = [50, 100, 250, 500, 1000, 2000, 2500, 5000, 10000];
+% else:
     var scales = [100, 250, 500, 1000, 2000, 2500, 5000, 10000];
+% endif
 
 % if echelle:
     // Determine zoom level
@@ -145,16 +149,22 @@ Ext.onReady(function() {
     });
 
     var tbar = mapPanel.getTopToolbar();
-
-    var txt = "<b>Cadastre</b>: ${nomcad} - <b>Folio</b>: ${nom_folio} - ";
-% if type_ == u'graphique':
+    var txt = "";
+% if nom_folio and nomcad:
+    txt += "<b>Cadastre</b>: ${nomcad} - <b>Folio</b>: ${nom_folio} - ";
+    % if type_ == u'graphique':
     txt += "<b>Plan cadastral</b>";
-% elif type_ == u'distribution':
+    % elif type_ == u'distribution':
     txt += "<b>Plan de distribution/répartition</b>";
-% elif type_ == u'mutation':
-    txt += "<b>Plan de mutation</b> n° ${no_plan}";
-% elif type_ == u'servitude':
+    % elif type_ == u'mutation':
+        txt += "<b>Plan de mutation</b> n° ${no_plan}";
+    % elif type_ == u'servitude':
     txt += "<b>Plan de servitude</b> n° ${no_plan}";
+    % endif
+% endif
+
+% if num_dossier and district:
+    txt += "<b>District</b>: ${district} - <b>N° dossier</b>: ${int(num_dossier)} - ${nom_liste_tech}";
 % endif
 
 % if type_plan:
@@ -213,8 +223,15 @@ Ext.onReady(function() {
     % endif
         'txtDescription': txt
     };
+% elif num_dossier and district:
+    var options = {
+    % if echelle:
+        'echelle': '${echelle}',
+    % endif
+         'txtDescription': 'PPE: '+txt
+    };
 % else:
-    var option;
+    var options = {};
 % endif
 
     tbar.addButton(
