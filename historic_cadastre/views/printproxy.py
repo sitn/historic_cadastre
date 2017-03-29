@@ -42,6 +42,7 @@ from pyramid.httpexceptions import HTTPBadGateway
 
 log = logging.getLogger(__name__)
 
+
 class Printproxy(object):  # pragma: no cover
 
     def __init__(self, request):
@@ -108,10 +109,10 @@ class Printproxy(object):  # pragma: no cover
         # get URL
         _url = self.request.registry.settings['print_url'] + 'create.json' + '?' + query_string
         log.info("Send print query to %s." % _url)
-        
+
         content_length = int(self.request.environ['CONTENT_LENGTH'])
         body = self.request.environ['wsgi.input'].read(content_length)
-        
+
         # forward request to target (without Host Header)
         http = httplib2.Http()
         h = dict(self.request.headers)
@@ -125,7 +126,30 @@ class Printproxy(object):  # pragma: no cover
         except:
             return HTTPBadGateway()
 
-        return Response(content, status=resp.status, headers=dict(resp))
+        headers = dict(resp)
+
+        # Hop-by-hop Headers are not supported by WSGI
+        # See:
+        # https://www.python.org/dev/peps/pep-3333/#other-http-features
+        # chapter 13.5.1 at http://www.faqs.org/rfcs/rfc2616.html
+        for header in [
+                "connection",
+                "keep-alive",
+                "proxy-authenticate",
+                "proxy-authorization",
+                "te",
+                "trailers",
+                "transfer-encoding",
+                "upgrade"
+        ]:  # pragma: no cover
+            if header in headers:
+                del headers[header]
+        # Other problematic headers
+        for header in ["content-length", "content-location"]:  # pragma: no cover
+            if header in headers:
+                del headers[header]
+
+        return Response(content, status=resp.status, headers=headers)
 
     @view_config(route_name='printproxy_get')
     def get(self):
@@ -152,6 +176,6 @@ class Printproxy(object):  # pragma: no cover
         headers['content-disposition'] = resp['content-disposition']
         # remove Pragma and Cache-Control headers because of ie bug:
         # http://support.microsoft.com/default.aspx?scid=KB;EN-US;q316431
-        #del response.headers['Pragma']
-        #del response.headers['Cache-Control']
+        # del response.headers['Pragma']
+        # del response.headers['Cache-Control']
         return Response(content, status=resp.status, headers=headers)
