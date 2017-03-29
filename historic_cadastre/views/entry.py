@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 from pyramid.view import view_config
-from pyramid.httpexceptions import HTTPNotFound
+from pyramid.httpexceptions import HTTPNotFound, HTTPForbidden
 
-from historic_cadastre.models import DBSession
-from historic_cadastre.models import VPlanGraphique, Servitude, CadastreGraphique, VPlanDistr
-from historic_cadastre.models import VPlanMut
+from historic_cadastre.models import DBSession, mapped_classes_registry
+from historic_cadastre.lib.authorization import check_rights
+
 
 class Entry(object):
 
@@ -22,29 +22,16 @@ class Entry(object):
         if 'type' not in self.request.params:
             return HTTPNotFound()
 
-        code = None
-
-        if 'code' in self.request.params:
-            code = self.request.params['code']
-
         return {
             'debug': self.debug,
             'id': self.request.params['id'],
-            'code': code,
             'type': self.request.params['type']
         }
 
     @view_config(route_name='viewer', renderer='viewer.js')
     def viewer(self):
 
-        mapper = {
-            'graphique': VPlanGraphique,
-            'servitude': Servitude,
-            'cadastre_graphique': CadastreGraphique,
-            'distribution': VPlanDistr,
-            'mutation': VPlanMut
-        }
-
+        mapping_conf = self.request.registry.settings['type_configuration']
 
         type_plan = {
             'o': u'original',
@@ -59,21 +46,23 @@ class Entry(object):
 
         id_plan = self.request.params['id_plan']
 
-        code = None
-
-        if 'code' in self.request.params:
-            code = self.request.params['code']
-
         type_ = self.request.params['type']
 
-        mapped_class = mapper[type_]
+        mapper = mapping_conf[type_]
+
+        pass_through = True
+
+        if mapper['public'] is False:
+            pass_through = check_rights(self.request, type_)
+
+        if pass_through is False:
+            return HTTPForbidden()
+
+        mapped_class = mapped_classes_registry[mapper['table']]
 
         params = DBSession.query(mapped_class).get(id_plan)
 
         plan_url = self.request.route_url('image_proxy', type=type_, id=id_plan)
-
-        if code:
-            plan_url += '?code=' + code
 
         self.request.response.content_type = 'application/javascript'
 
@@ -90,25 +79,47 @@ class Entry(object):
         else:
             echelle = None
 
+        list_folio = None
+        nom_folio = None
+        cadastre = None
+        plan = None
+        num_dossier = None
+        nom_liste_tech = None
+        district = None
+
         if type_ == 'servitude' or type_ == 'cadastre_graphique':
             list_folio = params.id_plan.split('_')
             nom_folio = list_folio[2]
         else:
-            if params.nom_plan:
+            if hasattr(params, 'nom_plan') is True:
                 list_folio = params.nom_plan.split('_')
                 nom_folio = list_folio[1]
+        if hasattr(params, 'cadastre') is True:
+            cadastre = params.cadastre
+        if hasattr(params, 'plan') is True:
+            plan = params.plan
+
+        if hasattr(params, 'num_dossier') is True:
+            num_dossier = params.num_dossier
+        if hasattr(params, 'nom_liste_tech') is True:
+            nom_liste_tech = params.nom_liste_tech
+        if hasattr(params, 'district') is True:
+            district = params.district
 
         return {
             'debug': self.debug,
             'id_plan': id_plan,
-            'nom_folio':nom_folio,
+            'nom_folio': nom_folio,
             'plan_largeur': params.larg,
             'plan_hauteur': params.haut,
             'plan_resolution': params.resol,
             'plan_url': plan_url,
-            'nomcad': params.cadastre,
-            'no_plan': params.plan,
+            'nomcad': cadastre,
+            'no_plan': plan,
             'type_plan': type_plan_,
             'echelle': echelle,
-            'type_': type_
+            'type_': type_,
+            'district': district,
+            'nom_liste_tech': nom_liste_tech,
+            'num_dossier': num_dossier,
         }
