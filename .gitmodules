@@ -1,6 +1,6 @@
 [submodule "historic_cadastre/static/lib/openlayers"]
 	path = historic_cadastre/static/lib/openlayers
-	url = https://github.com/openlayers/openlayers.git
+	url = https://github.com/openlayers/ol2.git
 [submodule "historic_cadastre/static/lib/geoext"]
 	path = historic_cadastre/static/lib/geoext
 	url = https://github.com/geoext/geoext.git
