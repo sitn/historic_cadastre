@@ -24,6 +24,7 @@ vars:
     image_server_mutation: overwriteme
     image_server_servitudes: overwriteme
     image_server_cadastre_graphique: overwriteme
+    image_server_ppe: overwriteme
     intranet_code: overwriteme
 
     directory: __import__('os').getcwd()
@@ -33,6 +34,48 @@ vars:
         url: postgresql://{dbuser}:{dbpassword}@{dbhost}:{dbport}/{db}
         
     print_url: http://localhost:8080/print-{instanceid}/pdf/
+
+    # Each kind of layer which can be requested through this portal
+    # should be defined here under as well as in models.py
+    # The configuration here under is as follows:
+    # name_of_service:
+    #   table: db_table_name (as defined in __tablename__ in models.py
+    #   public: True (or False) (if False, users should have a role having the same value as name_of_service
+    #   image_server: mapped network drive where the images are stored
+    type_configuration:
+      graphique:
+        table: v_plan_graphique
+        public: True
+        image_server: "{image_server_graphique}"
+      servitude:
+        table: servitudes
+        public: True
+        image_server: "{image_server_servitudes}"
+      cadastre_graphique:
+        table: cadastres_graphiques
+        public: True
+        image_server: "{image_server_cadastre_graphique}"
+      distribution:
+        table: v_plan_distr
+        public: True
+        image_server: "{image_server_graphique}"
+      mutation:
+        table: v_plan_mut
+        public: True
+        image_server: "{image_server_mutation}"
+      ppe:
+        table: pp03_pieces_techniques
+        public: False
+        image_server: "{image_server_ppe}"
+    # For debug mode
+    jsbuild:
+      config: "{directory}/jsbuild/app.cfg"
+      root_dir: "{directory}"
+    # Authentication settings
+    authtkt:
+        # Cookie session secret
+      secret: __import__('uuid').uuid4().hex
+      cookie_name: auth_tkt_{instanceid}
 
 interpreted:
     python:

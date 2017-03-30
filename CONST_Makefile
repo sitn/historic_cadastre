@@ -33,6 +33,9 @@ VARS_DEPENDS += $(VARS_FILES)
 
 CONFIG_VARS += \
 	sqlalchemy.url \
+	authtkt \
+	jsbuild \
+	type_configuration \
 	image_server_graphique \
 	image_server_mutation \
 	image_server_servitudes \
