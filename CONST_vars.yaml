@@ -17,6 +17,10 @@ vars:
     db: overwriteme
 
     host: localhost
+    proxy_host: overwriteme
+
+    print_localhost_forward_from: "{host}"
+    print_localhost_forward_from_ssl: overwriteme
 
     waitress_port: 6543
 
