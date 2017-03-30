@@ -20,14 +20,6 @@ def pdf_proxy(request):
         'mutation': VPlanMut
     }
 
-    if 'code' in request.params:
-        code = request.params['code']
-    else:
-        return HTTPNotFound()
-
-    if code and code != request.registry.settings['intranet_code']:
-        return HTTPNotFound()
-
     type = request.matchdict['type']
 
     id_folio = int(request.matchdict['id'])

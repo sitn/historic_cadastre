@@ -25,7 +25,6 @@ vars:
     image_server_servitudes: overwriteme
     image_server_cadastre_graphique: overwriteme
     image_server_ppe: overwriteme
-    intranet_code: overwriteme
 
     directory: __import__('os').getcwd()
     python_path: __import__('distutils').sysconfig.get_python_lib()
