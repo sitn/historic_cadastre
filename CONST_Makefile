@@ -40,16 +40,15 @@ CONFIG_VARS += \
 	image_server_mutation \
 	image_server_servitudes \
 	image_server_cadastre_graphique \
-	print_url \
-	intranet_code
+	print_url
 
 JSBUILD_MAIN_FILES = $(shell find $(PACKAGE)/static/lib $(PACKAGE)/static/js -name "*.js" -print 2> /dev/null)
 JSBUILD_MAIN_CONFIG = jsbuild/app.cfg
 JSBUILD_MAIN_OUTPUT_FILES ?= app.js lang-fr.js
 JSBUILD_MAIN_OUTPUT_FILES := $(addprefix $(OUTPUT_DIR)/, $(JSBUILD_MAIN_OUTPUT_FILES))
 
-TOMCAT_START_COMMAND = net START Tomcat7
-TOMCAT_STOP_COMMAND = net STOP Tomcat7
+TOMCAT_START_COMMAND ?= net START Tomcat7
+TOMCAT_STOP_COMMAND ?= net STOP Tomcat7
 PRINT_TMP = tmp
 PRINT_BASE_DIR ?= print
 PRINT_WAR ?= print-$(INSTANCE_ID).war
