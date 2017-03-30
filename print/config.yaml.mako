@@ -37,12 +37,13 @@ hosts:
     host: ${host}
     port: ${waitress_port}
   - !dnsMatch
-    host: sitn.ne.ch
+    host: ${proxy_host}
     port: 80
 
 localHostForward:
     from:
-        - ${host}
+        - ${print_localhost_forward_from}
+        ${print_localhost_forward_from_ssl}
     https2http: True
 
 #===========================================================================
