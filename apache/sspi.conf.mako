@@ -15,3 +15,6 @@
     Order allow,deny
     Allow from all
 </Location>
+<Location /${instanceid}/img>
+    Satisfy any
+</Location>
