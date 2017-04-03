@@ -106,11 +106,11 @@
                         <td align="center">${result['date_plan']}</td>
                         <td align="center">${result['date_acte']}</td>
                         <td align="center">${result['date_depot']}</td>
-                        <td align="center"><a href="${request.route_url('home')}/?id=${result['id']}&type=mutation&code=${code}" target="_blank">Plan</a></td>
+                        <td align="center"><a href="${request.route_url('home')}/?id=${result['id']}&type=mutation" target="_blank">Plan</a></td>
 % if result['chemin_desi'] == None:
                         <td align="center">Pas de désignation</td>
 % else:
-                        <td align="center"><a href="${request.route_url('pdf_proxy', type='mutation', id=result['id'])}?code=${code}" target="_blank">Désignation</a></td>
+                        <td align="center"><a href="${request.route_url('pdf_proxy', type='mutation', id=result['id'])}" target="_blank">Désignation</a></td>
 % endif
                     </tr>
 % endfor

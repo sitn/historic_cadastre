@@ -9,13 +9,6 @@ import datetime
 @view_config(route_name='mutation_list', renderer='mutations_list.html')
 def mutation_list(request):
 
-    code = None
-
-    if 'code' in request.params:
-        code = request.params['code']
-    else:
-        return HTTPNotFound()
-
     if 'id' in request.params:
         id = request.params['id']
     else:
@@ -76,7 +69,7 @@ def mutation_list(request):
             'chemin_desi': result.chemin_desi
         })
 
-    return {'list': list, 'code':code, 'debug':debug}
+    return {'list': list, 'debug':debug}
     
 def dateToString(date):
     
