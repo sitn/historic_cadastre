@@ -1,5 +1,9 @@
 Ext.onReady(function() {
+% if echelle is not None:
     var echelle = ${echelle};
+% else:
+    var echelle;
+% endif
     if ('${plan_largeur}' === 'None' || echelle === -9999) {
         Ext.get('loading').remove();
         Ext.fly('loading-mask').fadeOut({
