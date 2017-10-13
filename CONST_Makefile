@@ -4,8 +4,8 @@ PACKAGE = historic_cadastre
 
 PIP_CMD ?= $(VENV_BIN)/pip
 PIP_INSTALL_ARGS += install
-PIP_VERSION ?= pip>=6
-SETUPTOOL_VERSION ?= setuptools>=12
+PIP_VERSION ?= pip>=9
+SETUPTOOL_VERSION ?= setuptools>=36
 
 OUTPUT_DIR = $(PACKAGE)/static/build
 
