@@ -20,6 +20,7 @@ setup(
         'geoalchemy2',
         'httplib2',
         'JSTools',
+        'psycopg2',
         'pyramid',
         'sqlahelper',
         'SQLAlchemy',
