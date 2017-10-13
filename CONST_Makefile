@@ -35,6 +35,7 @@ CONFIG_VARS += \
 	sqlalchemy.url \
 	authtkt \
 	jsbuild \
+	print_templates \
 	type_configuration \
 	image_server_graphique \
 	image_server_mutation \

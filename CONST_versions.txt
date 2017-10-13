@@ -1,5 +1,5 @@
 bottle==0.12.13
-c2c.template==1.5.1
+c2c.template==1.2.0
 configparser==3.5.0
 enum34==1.1.6
 flake8==3.4.1

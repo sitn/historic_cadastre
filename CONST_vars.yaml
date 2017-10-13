@@ -22,6 +22,18 @@ vars:
     print_localhost_forward_from: "{host}"
     print_localhost_forward_from_ssl: overwriteme
 
+    print_templates:
+    - 0 A4 paysage
+    - 1 A4 portrait
+    - 2 A3 paysage
+    - 3 A3 portrait
+    - 4 A2 paysage
+    - 5 A2 portrait
+    - 6 A1 paysage
+    - 7 A1 portrait
+    - 8 A0 paysage
+    - 9 A0 portrait
+
     waitress_port: 6543
 
     image_server_graphique: overwriteme
@@ -74,6 +86,27 @@ vars:
     jsbuild:
       config: "{directory}/jsbuild/app.cfg"
       root_dir: "{directory}"
+    
+    sspi_conf: |
+        <Location /{instanceid}/>
+          AuthName "A Protected Place"
+          AuthType SSPI
+          SSPIAuth On
+          SSPIAuthoritative On
+          SSPIOfferBasic On # For non IE users
+          SSPIBasicPreferred On
+          SSPIUsernameCase lower
+          require valid-user
+          SSPIDomain localhost/{instanceid}/
+          Order allow,deny
+          Allow from all
+        </Location>
+        <Location /{instanceid}/img>
+          Satisfy any
+        </Location>
+    
+    apache24_conf: "# APACHE 2.4 configuration"
+    
     # Authentication settings
     authtkt:
         # Cookie session secret

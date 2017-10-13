@@ -7,18 +7,19 @@
 
     #-------------------------------------------------------------------------
     mainPage:
-      pageSize: A4
+      pageSize: A1
       rotation: true
-      backgroundPdf: 'file:///<%text>$</%text>{configDir}/A4_portrait.pdf'
-      marginTop: 69
+      landscape: true
+      backgroundPdf: 'file:///<%text>$</%text>{configDir}/A1_paysage.pdf'
+      marginTop: 82
       items:
         - !map
-          width: 530
-          height: 692
-          align: center
+          width: 2320
+          height: 1500
+          align:center
         - !columns
-          absoluteX: 221
-          absoluteY: 55
+          absoluteX: 1118
+          absoluteY: 78
           width: 500
           items:
             - !scalebar
@@ -30,33 +31,34 @@
               align: left
               barSize: 3
               lineWidth: 0.3
-              fontSize: 5
-              labelDistance: 2
+              fontSize: 8
+              labelDistance: 4
               barBgColor: #FFFFFF
         - !columns
           condition: showDescription
-          absoluteX: 20
-          absoluteY: 70
+          absoluteX: 30
+          absoluteY: 90
           width: 400
           items:
             - !text
               text: '<%text>$</%text>{txtDescription}'
-              fontSize: 8
+              fontSize: 10
               align: left
               vertAlign: top
-        # Date
         - !columns
-          absoluteX: 20
-          absoluteY: 40
+          absoluteX: 30
+          absoluteY: 50
           width: 200
           items:
             - !text
               text: 'Impression du : <%text>$</%text>{now dd.MM.yyyy HH:mm:ss}'
-              fontSize: 6
+              fontSize: 10
+              align: left
+              vertAlign: top
         # Title
         - !columns
-          absoluteX: 20
-          absoluteY: 55
+          absoluteX: 30
+          absoluteY: 75
           width: 118
           items:
             - !text
@@ -64,24 +66,29 @@
               fontSize: 10
         # Comment
         - !columns
-          absoluteX: 434
-          absoluteY: 55
-          width: 118
+          absoluteX: 1649
+          absoluteY: 85
+          width: 250
           items:
             - !text
               text: '<%text>$</%text>{comment}'
-              fontSize: 7
+              fontSize: 11
+              align: left
         # Scale
         - !columns
-          absoluteX: 258
-          absoluteY: 40
+          absoluteX: 2230
+          absoluteY: 57
           width: 150
           items:
             - !text
               text: 'Échelle 1:<%text>$</%text>{scale}'
-              fontSize: 9
+              fontSize: 11
+              align: center
+
+## end of global template code
+## start of block specific code
 
 ## the backslash tell mako To Not write a new line at the end
 <%def name="title()">\
-1 A4 portrait\
+6 A1 paysage\
 </%def>

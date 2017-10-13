@@ -53,12 +53,7 @@ class Printproxy(object):  # pragma: no cover
     def info(self):
         """ Get print capabilities. """
 
-        templates = [
-            '1 A4 paysage',
-            '2 A4 portrait',
-            '3 A3 paysage',
-            '4 A3 portrait'
-        ]
+        templates = self.request.registry.settings['print_templates']
 
         # get query string
         params = dict(self.request.params)
