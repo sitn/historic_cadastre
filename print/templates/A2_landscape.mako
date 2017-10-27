@@ -59,7 +59,7 @@
         - !columns
           absoluteX: 30
           absoluteY: 75
-          width: 118
+          width: 200
           items:
             - !text
               text: '<%text>$</%text>{title}'

@@ -10,11 +10,11 @@
       pageSize: A4
       rotation: true
       backgroundPdf: 'file:///<%text>$</%text>{configDir}/A4_portrait.pdf'
-      marginTop: 69
+      marginTop: 50
       items:
         - !map
-          width: 530
-          height: 692
+          width: 565
+          height: 720
           align: center
         - !columns
           absoluteX: 221

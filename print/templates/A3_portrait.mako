@@ -13,8 +13,8 @@
       marginTop: 76
       items:
         - !map
-          width: 750
-          height: 989
+          width: 785
+          height: 1020
           align: center
         - !columns
           absoluteX: 313
@@ -35,7 +35,7 @@
               barBgColor: #FFFFFF
         - !columns
           condition: showDescription
-          absoluteX: 20
+          absoluteX: 27
           absoluteY: 93
           width: 400
           items:
@@ -45,7 +45,7 @@
               align: left
               vertAlign: top
         - !columns
-          absoluteX: 20
+          absoluteX: 27
           absoluteY: 55
           width: 200
           items:
@@ -55,7 +55,7 @@
         - !columns
           absoluteX: 20
           absoluteY: 78
-          width: 195
+          width: 200
           items:
             - !text
               text: '<%text>$</%text>{title}'
