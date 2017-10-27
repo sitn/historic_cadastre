@@ -87,5 +87,5 @@
 
 ## the backslash tell mako To Not write a new line at the end
 <%def name="title()">\
-1 A4 paysage\
+0 A4 paysage\
 </%def>

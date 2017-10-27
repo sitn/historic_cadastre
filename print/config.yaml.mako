@@ -73,3 +73,21 @@ layouts:
 
 ## A3 portrait default
 <%include file="templates/A3_portrait.mako" />
+
+## A2 landscape default
+<%include file="templates/A2_landscape.mako" />
+
+## A2 portrait default
+<%include file="templates/A2_portrait.mako" />
+
+## A1 landscape default
+<%include file="templates/A1_landscape.mako" />
+
+## A1 portrait default
+<%include file="templates/A1_portrait.mako" />
+
+## A0 landscape default
+<%include file="templates/A0_landscape.mako" />
+
+## A0 portrait default
+<%include file="templates/A0_portrait.mako" />
