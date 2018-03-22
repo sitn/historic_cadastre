@@ -61,6 +61,7 @@ def mutation_list(request):
             'nom_plan': nom_plan,
             'plan': result.plan,
             'indice': result.indice,
+            'folio': result.folio,
             'req_tot': result.req_tot,
             'req_bidon': req_bidon,
             'date_plan': date_plan,

@@ -80,13 +80,18 @@
           </table>
         </div>
         <div style="margin-right:5px ; margin-left:5px">
-            <p><font size=4>Mutation(s) contenue(s) dans le plan ${list[0]['nom_plan']} du cadastre de ${list[0]['cadastre']}</font></p>
+% if list[0]['nom_plan']=='0':
+            <p><font size=4>Mutations contenues dans le cadastre de ${list[0]['cadastre']}</font></p>
+% else:
+            <p><font size=4>Mutations contenues dans le folio ${list[0]['nom_plan']} du cadastre de ${list[0]['cadastre']}</font></p>
+% endif
             <br></br>
             <table class='timetable' id="mutation">
                 <thead>
                     <tr bgcolor=#ddd>
                         <th align="center">Numéro du plan</th>
                         <th align="center">Indice</th>
+                        <th align="center">Folio</th>
                         <th align="center">Réquisition</th>
                         <th align="center">Réq fictive</th>
                         <th align="center">Date du plan</th>
@@ -101,6 +106,7 @@
                     <tr>
                         <td align="center">${result['plan']}</td>
                         <td align="center">${result['indice']}</td>
+                        <td align="center">${result['folio']}</td>
                         <td align="center">${result['req_tot']}</td>
                         <td align="center">${result['req_bidon']}</td>
                         <td align="center">${result['date_plan']}</td>

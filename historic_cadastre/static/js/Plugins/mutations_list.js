@@ -33,6 +33,7 @@
             {"sType": 'numeric'},
             null,
             null,
+            null,
             {"sType": 'date-euro'},
             {"sType": 'date-euro'},
             {"sType": 'date-euro'},
