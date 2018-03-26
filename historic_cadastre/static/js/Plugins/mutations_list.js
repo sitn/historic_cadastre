@@ -27,6 +27,7 @@
 
      /* Build the DataTable with third column using our custom sort functions */
     $('#mutation').dataTable({
+        "iDisplayLength": 25,
         "aaSorting": [[0, 'asc'], [1, 'asc']],
         "aoColumns": [
             {"sType": 'numeric'},
@@ -46,7 +47,12 @@
             "sInfoEmpty": "Pas d'enregistrement correspondant",
             "sEmptyTable": "Pas de données dans la table",
             "sInfoFiltered": " - filtre sur _MAX_ enregistrements",
-            "sLengthMenu": "Affichage _MENU_ enregistrements",
+            "sLengthMenu": 'Affichage<select>'+
+                '<option value="25">25</option>'+
+                '<option value="50">50</option>'+
+                '<option value="100">100</option>'+
+                '<option value="150">150</option>'+
+                '</select>Enregistrement',
             "sZeroRecords": "Pas d'enregistrement à afficher",
             "oPaginate": {
                 "sPrevious": "Page précédente",
