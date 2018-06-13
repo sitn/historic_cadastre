@@ -91,11 +91,12 @@ class Entry(object):
             list_folio = params.id_plan.split('_')
             nom_folio = list_folio[2]
         else:
-            if hasattr(params, 'nom_plan') is True:
+            if hasattr(params, 'nom_plan') is True and hasattr(params, 'folio') is True:
                 list_folio = params.nom_plan.split('_')
                 nom_folio = list_folio[1]
                 if nom_folio == '0':
                     nom_folio = params.folio
+
         if hasattr(params, 'cadastre') is True:
             cadastre = params.cadastre
         if hasattr(params, 'plan') is True:

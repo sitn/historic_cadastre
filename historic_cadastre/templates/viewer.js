@@ -154,18 +154,23 @@ Ext.onReady(function() {
 
     var tbar = mapPanel.getTopToolbar();
     var txt = "";
-% if nom_folio and nomcad:
-    txt += "<b>Cadastre</b>: ${nomcad} - <b>Folio</b>: ${nom_folio} - ";
-    % if type_ == u'graphique':
-    txt += "<b>Plan cadastral</b>";
-    % elif type_ == u'distribution':
-    txt += "<b>Plan de distribution/répartition</b>";
-    % elif type_ == u'mutation':
-        txt += "<b>Plan de mutation</b> n° ${no_plan}";
-    % elif type_ == u'servitude':
-    txt += "<b>Plan de servitude</b> n° ${no_plan}";
-    % endif
+
+% if nomcad:
+    txt += "<b>Cadastre</b>: ${nomcad} - ";
 % endif
+% if nom_folio:
+    txt += "<b>Folio</b>: ${nom_folio} - ";
+% endif
+% if type_ == u'graphique':
+    txt += "<b>Plan cadastral</b>";
+% elif type_ == u'distribution':
+    txt += "<b>Plan de distribution/répartition</b>";
+% elif type_ == u'mutation':
+    txt += "<b>Plan de mutation</b> n° ${no_plan}";
+% elif type_ == u'servitude':
+    txt += "<b>Plan de servitude</b> n° ${no_plan}";
+% endif
+
 
 % if num_dossier and district:
     txt += "<b>District</b>: ${district} - <b>N° dossier</b>: ${int(num_dossier)} - ${nom_liste_tech}";
