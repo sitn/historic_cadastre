@@ -43,7 +43,7 @@ def main():  # pragma: no cover
 
     base_template = 'print/templates/print.mako'
     if os.path.exists(base_template):
-        print "building print template"
+        print("building print template")
 
         # DONT! add a trailing / to the lookup path, mako cant find templates otherwise
         mylookup = TemplateLookup(directories=['print/templates'])
@@ -54,6 +54,6 @@ def main():  # pragma: no cover
         print_template.write(mytemplate.render().encode('UTF-8'))
         print_template.close()
 
-        print "finished building print template"
+        print("finished building print template")
     else:
-        print "no print template found, ignoring"
+        print("no print template found, ignoring")
