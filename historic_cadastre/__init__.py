@@ -54,7 +54,8 @@ def main(global_config, **settings):
 
     config = Configurator(settings=settings)
     settings = config.get_settings()
-    settings.update(yaml.load(file(settings.get("app.cfg"))))
+    yaml_config = yaml.load(open(settings.get("app.cfg")))['vars']
+    settings.update(yaml_config)
 
     add_mako_renderer(config, ".html")
     add_mako_renderer(config, ".js")
@@ -72,8 +73,8 @@ def main(global_config, **settings):
     )
 
     authtkt_authentication_policy = AuthTktAuthenticationPolicy(
-        settings.get('authtkt')['secret'],
-        cookie_name=settings.get('authtkt')['cookie_name'],
+        settings.get('authtkt_cookie_name'),
+        cookie_name=settings.get('authtkt_cookie_name'),
         hashalg='sha512'
     )
 

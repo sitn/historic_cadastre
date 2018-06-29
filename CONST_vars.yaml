@@ -1,6 +1,6 @@
 vars:
     # project instance id
-    instanceid: INSTANCE_ID
+    instanceid: '{INSTANCE_ID}'
     # the package name
     package: historic_cadastre
     # url-path where the instance must respond.
@@ -41,9 +41,6 @@ vars:
     image_server_servitudes: overwriteme
     image_server_cadastre_graphique: overwriteme
     image_server_ppe: overwriteme
-
-    directory: __import__('os').getcwd()
-    python_path: __import__('distutils').sysconfig.get_python_lib()
 
     sqlalchemy:
         url: postgresql://{dbuser}:{dbpassword}@{dbhost}:{dbport}/{db}
@@ -106,16 +103,18 @@ vars:
         </Location>
     
     apache24_conf: "# APACHE 2.4 configuration"
-    
-    # Authentication settings
-    authtkt:
+
         # Cookie session secret
-      secret: __import__('uuid').uuid4().hex
-      cookie_name: auth_tkt_{instanceid}
+    authtkt_secret: __import__('uuid').uuid4().hex
+    authtkt_cookie_name: auth_tkt_{INSTANCE_ID}
+
+    directory: __import__('os').getcwd()
+    python_path: "{directory}/.build/venv/lib/site-packages"
 
 interpreted:
     python:
-    - python_path
     - directory
-    environment:
-    - instanceid
+    - authtkt_secret
+
+environment:
+  - INSTANCE_ID

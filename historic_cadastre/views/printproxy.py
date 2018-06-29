@@ -32,7 +32,7 @@ import httplib2
 import urllib
 import logging
 
-from urlparse import urlparse
+from urllib.parse import urlparse
 import simplejson as json
 from simplejson.decoder import JSONDecodeError
 

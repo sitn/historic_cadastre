@@ -2,10 +2,11 @@ VENV_BIN ?= .build/venv/Scripts
 PYTHON_VERSION = $(shell $(VENV_BIN)/python -c "import sys; print('%i.%i' % (sys.version_info.major, sys.version_info.minor))" 2> /dev/null)
 PACKAGE = historic_cadastre
 
+INSTANCE_ID ?= historic_cadastre
+export INSTANCE_ID
+
 PIP_CMD ?= $(VENV_BIN)/pip
 PIP_INSTALL_ARGS += install
-PIP_VERSION ?= pip>=9
-SETUPTOOL_VERSION ?= setuptools>=36
 
 OUTPUT_DIR = $(PACKAGE)/static/build
 
@@ -33,7 +34,8 @@ VARS_DEPENDS += $(VARS_FILES)
 
 CONFIG_VARS += \
 	sqlalchemy.url \
-	authtkt \
+	authtkt_secret \
+	authtkt_cookie_name \
 	jsbuild \
 	print_templates \
 	type_configuration \
@@ -209,9 +211,8 @@ $(VENV_BIN)/flake8: .build/dev-requirements.timestamp
 
 .build/venv.timestamp-noclean:
 	mkdir -p $(dir $@)
-	virtualenv --setuptools --no-site-packages .build/venv
-	$(PIP_CMD) install \
-		'$(PIP_VERSION)' '$(SETUPTOOL_VERSION)'
+	python -m venv --system-site-packages .build/venv
+	.build/venv/Scripts/python -m pip install --upgrade pip
 	touch $@
 
 .build/requirements.timestamp: $(EGGS_DEPENDENCIES)

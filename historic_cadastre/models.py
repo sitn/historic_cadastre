@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import sqlahelper
-
+import sys
+import inspect
 from sqlalchemy import Column, Integer, String
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship, backref
@@ -92,10 +93,11 @@ class AuthenticationUserRole(Base):
         primaryjoin="AuthenticationUserRole.id_role==AuthenticationRole.id_role",
     )
 
-
 mapped_classes_registry = {}
-for value in globals().values():
-    if hasattr(value, '__tablename__') and value.__tablename__.startswith('authentication_') is False:
-        if hasattr(value, '__table_args__'):
-            mapped_class = value
-            mapped_classes_registry[mapped_class.__tablename__] = mapped_class
+
+for name, obj in inspect.getmembers(sys.modules[__name__]):
+    if inspect.isclass(obj):
+       if hasattr(obj, '__tablename__') and obj.__tablename__.startswith('authentication_') is False:
+           if hasattr(obj, '__table_args__'):
+              mapped_class = obj
+              mapped_classes_registry[mapped_class.__tablename__] = mapped_class
