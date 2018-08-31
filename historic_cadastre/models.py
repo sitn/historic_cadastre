@@ -93,6 +93,13 @@ class AuthenticationUserRole(Base):
     )
 
 
+class HistoricParcelTree(Base):
+    __tablename__ ='historic_parcel_tree'
+    __table_args__ = {'schema': 'plan_histo', 'autoload': True}
+    idobj = Column('idobj', String, primary_key=True)
+    imm_source = Column(String, ForeignKey('plan_histo.historic_parcel_tree.imm_dest'))
+    children = relationship("HistoricParcelTree", lazy="joined", join_depth=6)
+
 mapped_classes_registry = {}
 for value in globals().values():
     if hasattr(value, '__tablename__') and value.__tablename__.startswith('authentication_') is False:
