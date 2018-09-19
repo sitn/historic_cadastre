@@ -1,0 +1,25 @@
+extends: CONST_vars.yaml
+vars:
+    dbuser: www-data
+    # database password
+    dbpassword: www-data
+    # database host
+    dbhost: nesitnd1
+    # database port
+    dbport: 5432
+    # database name
+    db: sitn95
+
+    host: localhost
+    proxy_host: sitnintra.ne.ch
+    print_localhost_forward_from_ssl: "- sitnintra.ne.ch"
+  
+    waitress_port: 6543
+
+    image_server_graphique: K:/Plans_cadastraux
+    image_server_mutation: K:/Plans_de_mutations
+    image_server_servitudes: I:/servitudes
+    image_server_ppe: K:/PPE
+    image_server_cadastre_graphique: I:/cadastres_graphiques
+    
+    
