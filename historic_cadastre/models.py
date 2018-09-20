@@ -101,16 +101,16 @@ class HistoricParcelTree(Base):
     children = relationship("HistoricParcelTree", lazy="joined", join_depth=6)
 
 
-for value in globals().values():
-    if hasattr(value, '__tablename__') and value.__tablename__.startswith('authentication_') is False:
-        if hasattr(value, '__table_args__'):
-            mapped_class = value
-            mapped_classes_registry[mapped_class.__tablename__] = mapped_class
-    mapped_classes_registry = {}
-
-
 class HistoricParcelDoc(Base):
     __label__ = "historic_parcel_doc"
     __tablename__ = "historic_parcel_link"
     __table_args__ = {"schema": "plan_histo", "autoload": True}
     idobj = Column("idobj", String, primary_key=True)
+
+
+mapped_classes_registry = {}
+for value in globals().values():
+    if hasattr(value, '__tablename__') and value.__tablename__.startswith('authentication_') is False:
+        if hasattr(value, '__table_args__'):
+            mapped_class = value
+            mapped_classes_registry[mapped_class.__tablename__] = mapped_class
