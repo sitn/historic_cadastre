@@ -100,12 +100,13 @@ class HistoricParcelTree(Base):
     imm_dest = Column(String, ForeignKey('plan_histo.historic_parcel_tree.imm_source'))
     children = relationship("HistoricParcelTree", lazy="joined", join_depth=6)
 
-mapped_classes_registry = {}
+
 for value in globals().values():
     if hasattr(value, '__tablename__') and value.__tablename__.startswith('authentication_') is False:
         if hasattr(value, '__table_args__'):
             mapped_class = value
             mapped_classes_registry[mapped_class.__tablename__] = mapped_class
+    mapped_classes_registry = {}
 
 
 class HistoricParcelDoc(Base):
