@@ -4,13 +4,14 @@ from pyramid.httpexceptions import HTTPNotFound
 
 from historic_cadastre.models import DBSession
 from historic_cadastre.models import HistoricParcelDoc
-import datetime
+from historic_cadastre.lib.misc import dateToString
+
 
 @view_config(route_name='historic_parcel_doc', renderer='historic_parcel_doc.html')
 def historic_parcel_doc(request):
 
     if 'id' in request.params:
-        id = request.params['id']
+        id_ = request.params['id']
     else:
         return HTTPNotFound()
 
@@ -21,7 +22,7 @@ def historic_parcel_doc(request):
 
     list = []
 
-    qq = DBSession.query(HistoricParcelDoc).filter(HistoricParcelDoc.imm_ref==id).order_by(HistoricParcelDoc.plan)
+    qq = DBSession.query(HistoricParcelDoc).filter(HistoricParcelDoc.imm_ref == id_).order_by(HistoricParcelDoc.plan)
 
     results = qq.all()
 
@@ -62,9 +63,4 @@ def historic_parcel_doc(request):
             'cadastre': result.cadastre
         })
 
-    return {'list': list, 'debug':debug}
-
-def dateToString(date):
-
-    strDate = date.isoformat()[8:10] + '.' + date.isoformat()[5:7] + '.' + date.isoformat()[:4]
-    return strDate
+    return {'list': list, 'debug': debug}
