@@ -6,7 +6,7 @@ from pyramid.response import FileResponse
 
 from historic_cadastre.models import DBSession
 
-from historic_cadastre.models import VPlanMut
+from historic_cadastre.models import VPlanMut, HistoricParcelDoc
 
 import logging
 import os
@@ -17,7 +17,8 @@ log = logging.getLogger(__name__)
 def pdf_proxy(request):
 
     mapper = {
-        'mutation': VPlanMut
+        'mutation': VPlanMut,
+        'histoparcel': HistoricParcelDoc
     }
 
     type = request.matchdict['type']
