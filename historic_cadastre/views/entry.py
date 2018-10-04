@@ -74,7 +74,7 @@ class Entry(object):
             else:
                 type_plan_ = params.type_plan
 
-        if params.echelle:
+        if hasattr(params, 'echelle') and params.echelle is not None:
             echelle = params.echelle
         else:
             echelle = None

@@ -57,10 +57,11 @@ def historic_parcel_doc(request):
             'affaire': result.affaire,
             'type_affaire': result.type_affaire,
             'texte_affaire': result.texte_affaire,
-            'chemin_plan': result.chemin_plan,
-            'chemin_desi': result.chemin_des,
+            'chemin_plan': result.chemin_cad,
+            'chemin_desi': result.chemin_desi,
             'id_mut_plan': result.id_mut_plan,
-            'cadastre': result.cadastre
+            'cadastre': result.cadastre,
+            'idobj': result.idobj
         })
 
     return {'list': list, 'debug': debug}
