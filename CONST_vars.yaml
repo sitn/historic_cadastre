@@ -78,6 +78,10 @@ vars:
         table: v_plan_mut
         public: True
         image_server: "{image_server_mutation}"
+      histoparcel:
+        table: historic_parcel_link
+        public: True
+        image_server: "{image_server_mutation}"
       ppe:
         table: pp03_pieces_techniques
         public: False
