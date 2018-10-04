@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="Content-Language" content="fr" />
+        <meta name="keywords" content="sitn, geoportail">
+        <meta name="description" content="Géoportail du SITN - plan graphique">
+        <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7; IE=EmulateIE9">
+
+        <title>Géoportail Archives du SITN</title>
+
+        <link rel="shortcut icon" type="image/x-icon" href="${request.static_url('historic_cadastre:static/images/favicon.ico')}">
+
+        <link rel="stylesheet" type="text/css" href="${request.static_url('historic_cadastre:static/lib/ext/resources/css/ext-all.css')}" />
+        <link rel="stylesheet" type="text/css" href="${request.static_url('historic_cadastre:static/lib/ext/resources/css/xtheme-gray.css')}" />
+        <link rel="stylesheet" type="text/css" href="${request.static_url('historic_cadastre:static/css/main.css')}" />
+        <link rel="stylesheet" type="text/css" href="${request.static_url('historic_cadastre:static/lib/jquery/DataTables/media/css/jquery.dataTables.css')}" />
+
+        <script src="${request.static_url('historic_cadastre:static/vendor/d3/d3.v3.5.17.js')}"></script>
+
+
+        <style>
+
+            .node {
+                cursor: pointer;
+            }
+
+            .node circle {
+                fill: #fff;
+                stroke: steelblue;
+                stroke-width: 1.5px;
+            }
+
+            .node text {
+                font: 14px sans-serif;
+            }
+
+            .link {
+                fill: none;
+                stroke: #ccc;
+                stroke-width: 2px;
+            }
+
+            .parents{
+                background:#cce6ff;
+                border-radius:50%;
+                width:10px;
+                height:10px;
+                border:2px solid #0073e6;
+            }
+
+            .parentsetendu{
+                background:#fff;
+                border-radius:50%;
+                width:10px;
+                height:10px;
+                border:2px solid #0073e6;
+            }
+
+            .parcelorigine{
+                background:#99e699;
+                border-radius:50%;
+                width:10px;
+                height:10px;
+                border:2px solid #0073e6;
+            }
+
+            .parcelrp{
+                background:#ffdb4d;
+                border-radius:50%;
+                width:10px;
+                height:10px;
+                border:2px solid #0073e6;
+            }
+
+            .chainerompue{
+                background:#ff9999;
+                border-radius:50%;
+                width:10px;
+                height:10px;
+                border:2px solid #0073e6;
+            }
+
+        </style>
+    </head>
+
+    <body>
+        <div id="header">
+            <table width="100%">
+                <tr>
+                    <td align="left" valign="top" style="height: 37px;">
+                        <img src="${request.static_url('historic_cadastre:static/images/banner_left.png')}" alt="" align="top" /></td>
+                    <td rowspan="2" valign="top" align="right">
+                        <a href="http://www.ne.ch" target=_blank>
+                            <img src="${request.static_url('historic_cadastre:static/images/banner_right.png')}" alt="" />
+                        </a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div style="margin-right:5px ; margin-left:5px">
+            <table width="100%">
+                <tr>
+                    <td rowspan="6" valign="top"><font size=4>Provenance de la parcelle  ${id}</font>
+                    </td>
+                    <td></td>
+                    <td align="right"><font size=4><u>Légende :</u></font></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td align="right"><font size=2>Contient des parcelles parentes</font>
+                    </td>
+                    <td align="left"><table width="20px" height="20px"><tr><td class="parents"></td></tr></table>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td align="right"><font size=2>Parcelles parentes étendues</font>
+                    </td>
+                    <td align="left"><table width="20px" height="20px"><tr><td class="parentsetendu"></td></tr></table>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td align="right"><font size=2>Parcelle d'origine</font>
+                    </td>
+                    <td align="left"><table width="20px" height="20px"><tr><td class="parcelorigine"></td></tr></table>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td align="right"><font size=2>Parcelles issues d'un remaniement parcellaire</font>
+                    </td>
+                    <td align="left"><table width="20px" height="20px"><tr><td class="parcelrp"></td></tr></table>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td align="right"><font size=2>Chaîne interrompue</font>
+                    </td>
+                    <td align="left"><table width="20px" height="20px"><tr><td class="chainerompue"></td></tr></table>
+                    </td>
+                </tr>
+            </table>
+
+            <script>
+                var getUrlParameter = function(name) {
+                    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+                    var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+                    var results = regex.exec(location.search);
+                    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+                };
+
+                var id = getUrlParameter("id");
+
+                var margin = {top: 20, right: 120, bottom: 20, left: 120},
+                    width = 960 - margin.right - margin.left,
+                    height = 800 - margin.top - margin.bottom;
+
+                var i = 0,
+                    duration = 750,
+                    root;
+
+                var tree = d3.layout.tree()
+                    .size([height, width]);
+
+                var diagonal = d3.svg.diagonal()
+                    .projection(function(d) { return [d.y, d.x]; });
+
+                var svg = d3.select("body").append("svg")
+                    .attr("width", width + margin.right + margin.left)
+                    .attr("height", height + margin.top + margin.bottom)
+                    .append("g")
+                    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+                d3.json("${request.route_url('historic_parcel_get', id='')}"+id, function(error, data) {
+                    if (error) throw error;
+
+                    root = data;
+                    root.x0 = height / 2;
+                    root.y0 = 0;
+
+                    function collapse(d) {
+                        if (d.children) {
+                            d._children = d.children;
+                            d._children.forEach(collapse);
+                            d.children = null;
+                        }
+                    }
+                    root.children.forEach(collapse);
+                    update(root);
+                });
+
+                d3.select(self.frameElement).style("height", "800px");
+
+                function update(source) {
+
+                    // Compute the new tree layout.
+                    var nodes = tree.nodes(root).reverse(),
+                    links = tree.links(nodes);
+
+                    // Normalize for fixed-depth.
+                    nodes.forEach(function(d) { d.y = d.depth * 180; });
+
+                    // Update the nodes...
+                    var node = svg.selectAll("g.node")
+                    .data(nodes, function(d) { return d.id || (d.id = ++i); });
+
+                    // Enter any new nodes at the parent's previous position.
+                    var nodeEnter = node.enter().append("g")
+                        .attr("class", "node")
+                        .attr("transform", function(d) { return "translate(" + source.y0 + "," + source.x0 + ")"; })
+                        .on("click", click);
+
+                    nodeEnter.append("circle")
+                        .attr("r", 1e-6)
+                        .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
+
+                    var g_tag = node.append("g")
+
+                    var a_tag = g_tag.append("a")
+                        .attr("xlink:href", function(d) {return d.lien})
+                        .attr("target", "_blank");
+
+                    a_tag.append("text")
+                        .attr("x", function(d) { return d.children || d._children ? -10 : 10; })
+                        .attr("dy", ".35em")
+                        .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
+                        .text(function(d) { return d.name; })
+                        .style("fill-opacity", 1e-6);
+
+                    var a_tag2 = g_tag.append("a")
+                        .attr("xlink:href", function(d) {return d.value})
+                        .attr("target", "_blank");
+
+                    a_tag2.append("text")
+                        .attr("x", function(d) { return d.children || d._children ? -10 : 10; })
+                        .attr("dy", "1.3em")
+                        .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
+                        .text('>>>')
+                        .style("fill-opacity", 1e-6);
+
+                    // Transition nodes to their new position.
+                    var nodeUpdate = node.transition()
+                        .duration(duration)
+                        .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; });
+
+                    nodeUpdate.select("circle")
+                        .attr("r", 6)
+                        .style("fill", function(d) {
+                            var color = "#fff";
+                            if (d._children)  {
+                                color = "lightsteelblue";
+                            }
+                            if (d.origine === 'rompu') {
+                                color = "#ff9999";
+                            }
+                            else if (d.origine === 'origine') {
+                                color = "#99e699";
+                            }
+
+                            else if (d.origine === 'rp') {
+                                color = "#ffdb4d";
+                            }
+
+                            return color
+
+                        });
+
+                    nodeUpdate.selectAll("text")
+                        .style("fill-opacity", 1);
+
+                    // Transition exiting nodes to the parent's new position.
+                    var nodeExit = node.exit().transition()
+                        .duration(duration)
+                        .attr("transform", function(d) { return "translate(" + source.y + "," + source.x + ")"; })
+                        .remove();
+
+                    nodeExit.select("circle")
+                        .attr("r", 1e-6);
+
+                    nodeExit.select("text")
+                        .style("fill-opacity", 1e-6);
+
+                    // Update the links...
+                    var link = svg.selectAll("path.link")
+                        .data(links, function(d) { return d.target.id; });
+
+                    // Enter any new links at the parent's previous position.
+                    link.enter().insert("path", "g")
+                        .attr("class", "link")
+                        .attr("d", function(d) {
+                            var o = {x: source.x0, y: source.y0};
+                            return diagonal({source: o, target: o});
+                        });
+
+                    // Transition links to their new position.
+                    link.transition()
+                        .duration(duration)
+                        .attr("d", diagonal);
+
+                    // Transition exiting nodes to the parent's new position.
+                    link.exit().transition()
+                        .duration(duration)
+                        .attr("d", function(d) {
+                            var o = {x: source.x, y: source.y};
+                            return diagonal({source: o, target: o});
+                        })
+                    .remove();
+
+                    // Stash the old positions for transition.
+                    nodes.forEach(function(d) {
+                        d.x0 = d.x;
+                        d.y0 = d.y;
+                    });
+                }
+
+                // Toggle children on click.
+                function click(d) {
+                    if (d.children) {
+                        d._children = d.children;
+                        d.children = null;
+                    }
+                    else {
+                        d.children = d._children;
+                        d._children = null;
+                    }
+                    update(d);
+                }
+
+            </script>
+        </div>
+    </body>
+</html>

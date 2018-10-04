@@ -92,6 +92,11 @@ def main(global_config, **settings):
     config.add_route('image_proxy', '/img/{type}/{id}')
     config.add_route('pdf_proxy', '/pdf/{type}/{id}')
 
+    # historic parcels
+    config.add_route('historic_parcel_get', '/historic_parcel/{id}')
+    config.add_route('historic_parcel', '/historic_parcel')
+    config.add_route('historic_parcel_doc', '/historic_parcel_doc')
+
     # print proxy routes
     config.add_route('printproxy', '/printproxy')
     config.add_route('printproxy_info', '/printproxy/info.json')
