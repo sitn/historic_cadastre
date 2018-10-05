@@ -382,6 +382,9 @@ def historic_parcel_get(request):
 
     data = copy.copy(children)
 
+    # Added to make it work in IE11, but do not ask why...
+    request.response.headers['Access-Control-Allow-Origin'] = '*'
+
     return data[0]
 
 
