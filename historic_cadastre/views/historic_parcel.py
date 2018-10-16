@@ -16,7 +16,29 @@ def historic_parcel_get(request):
 
     results = results.all()
 
-    root = id_
+    base_route = request.route_url('historic_parcel')
+    base_route_doc = request.route_url('historic_parcel_doc')
+
+    if results:
+        root = id_
+        origine = ''
+        doc = base_route_doc + '?id='+root
+        value = ''
+
+    else:
+        results2 = DBSession.query(HistoricParcelTree).filter(HistoricParcelTree.imm_source == id_)
+
+        results2 = results2.first()
+
+        root = id_
+        doc = base_route_doc + '?id='+id_
+        value = None
+        if results2.origine == 'origine':
+            origine = 'origine'
+        elif results2.origine == 'continue':
+            origine = 'rompu'
+        elif results2.origine == 'rp':
+            origine = 'rp'
 
     children = []
     children0 = []
@@ -28,18 +50,13 @@ def historic_parcel_get(request):
     children6 = []
     children7 = []
 
-    base_route = request.route_url('historic_parcel')
-    base_route_doc = request.route_url('historic_parcel_doc')
-
 # LEVEL INITIAL
-
-    doc = base_route_doc + '?id='+root
 
     children0 = list_append(children, {
         "name": root,
         "lien": doc,
-        "value": '',
-        "origine": '',
+        "value": value,
+        "origine": origine,
         "children": []
         })
 
@@ -114,7 +131,7 @@ def historic_parcel_get(request):
                 })
 
             elif len(row.children) == 0 and orig1 == '':
-                orig1 = 'chaîne brisée'
+                orig1 = 'rompu'
 
                 children2 = list_append(children1, {
                     "name": id_s1,
@@ -157,7 +174,7 @@ def historic_parcel_get(request):
                     })
 
                 elif len(row.children) == 0 and orig2 == '':
-                    orig2 = 'chaîne brisée'
+                    orig2 = 'rompu'
 
                     children3 = list_append(children2, {
                         "name": id_s2,
@@ -199,7 +216,7 @@ def historic_parcel_get(request):
                         })
 
                     elif len(row.children) == 0 and orig3 == '':
-                        orig3 = 'chaîne brisée'
+                        orig3 = 'rompu'
 
                         children4 = list_append(children3, {
                             "name": id_s3,
@@ -241,7 +258,7 @@ def historic_parcel_get(request):
                             })
 
                         elif len(row.children) == 0 and orig4 == '':
-                            orig4 = 'chaîne brisée'
+                            orig4 = 'rompu'
 
                             children5 = list_append(children4, {
                                 "name": id_s4,
@@ -283,7 +300,7 @@ def historic_parcel_get(request):
                                 })
 
                             elif len(row.children) == 0 and orig5 == '':
-                                orig5 = 'chaîne brisée'
+                                orig5 = 'rompu'
 
                                 children6 = list_append(children5, {
                                     "name": id_s5,
@@ -325,7 +342,7 @@ def historic_parcel_get(request):
                                     })
 
                                 elif len(row.children) == 0 and orig6 == '':
-                                    orig6 = 'chaîne brisée'
+                                    orig6 = 'rompu'
 
                                     children7 = list_append(children6, {
                                         "name": id_s6,
