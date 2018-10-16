@@ -22,7 +22,7 @@ def historic_parcel_get(request):
     if results:
         root = id_
         origine = ''
-        doc = base_route_doc + '?id='+root
+        doc = base_route_doc + '?id=' + root
         value = ''
 
     else:
@@ -31,7 +31,7 @@ def historic_parcel_get(request):
         results2 = results2.first()
 
         root = id_
-        doc = base_route_doc + '?id='+id_
+        doc = base_route_doc + '?id=' + id_
         value = None
         if results2.origine == 'origine':
             origine = 'origine'
@@ -66,8 +66,8 @@ def historic_parcel_get(request):
         id_s = row.imm_source
         orig = row.origine
         level1_data = []
-        url = base_route + "?id="+id_s
-        doc = base_route_doc + '?id='+id_s
+        url = base_route + "?id=" + id_s
+        doc = base_route_doc + '?id=' + id_s
 
         if 'DP' in id_s or 'RP' in id_s:
             origdp = 'origine'
@@ -109,8 +109,8 @@ def historic_parcel_get(request):
             id_s1 = row1.imm_source
             orig1 = row1.origine
             level2_data = []
-            url = base_route + "?id="+id_s1
-            doc = base_route_doc + '?id='+id_s1
+            url = base_route + "?id=" + id_s1
+            doc = base_route_doc + '?id=' + id_s1
 
             if 'DP' in id_s1 or 'RP' in id_s1:
                 origdp1 = 'origine'
@@ -152,8 +152,8 @@ def historic_parcel_get(request):
                 id_s2 = row2.imm_source
                 orig2 = row2.origine
                 level3_data = []
-                url = base_route + "?id="+id_s2
-                doc = base_route_doc + '?id='+id_s2
+                url = base_route + "?id=" + id_s2
+                doc = base_route_doc + '?id=' + id_s2
 
                 if 'DP' in id_s2 or 'RP' in id_s2:
                     origdp2 = 'origine'
@@ -195,8 +195,8 @@ def historic_parcel_get(request):
                     id_s3 = row3.imm_source
                     orig3 = row3.origine
                     level4_data = []
-                    url = base_route + "?id="+id_s3
-                    doc = base_route_doc + '?id='+id_s3
+                    url = base_route + "?id=" + id_s3
+                    doc = base_route_doc + '?id=' + id_s3
 
                     if 'DP' in id_s3 or 'RP' in id_s3:
                         children1 = list_append(children0, {
@@ -237,8 +237,8 @@ def historic_parcel_get(request):
                         id_s4 = row4.imm_source
                         orig4 = row4.origine
                         level5_data = []
-                        url = base_route + "?id="+id_s4
-                        doc = base_route_doc + '?id='+id_s4
+                        url = base_route + "?id=" + id_s4
+                        doc = base_route_doc + '?id=' + id_s4
 
                         if 'DP' in id_s4 or 'RP' in id_s4:
                             children1 = list_append(children0, {
@@ -279,8 +279,8 @@ def historic_parcel_get(request):
                             id_s5 = row5.imm_source
                             orig5 = row.origine
                             level6_data = []
-                            url = base_route + "?id="+id_s5
-                            doc = base_route_doc + '?id='+id_s5
+                            url = base_route + "?id=" + id_s5
+                            doc = base_route_doc + '?id=' + id_s5
 
                             if 'DP' in id_s5 or 'RP' in id_s5:
                                 children1 = list_append(children0, {
@@ -321,8 +321,8 @@ def historic_parcel_get(request):
                                 id_s6 = row6.imm_source
                                 orig6 = row6.origine
                                 level7_data = []
-                                url = base_route + "?id="+id_s6
-                                doc = base_route_doc + '?id='+id_s6
+                                url = base_route + "?id=" + id_s6
+                                doc = base_route_doc + '?id=' + id_s6
 
                                 if 'DP' in id_s6 or 'RP' in id_s6:
                                     children1 = list_append(children0, {
@@ -362,8 +362,8 @@ def historic_parcel_get(request):
                                 for row7 in level7_data:
                                     id_s7 = row7.imm_source
                                     orig7 = row.origine
-                                    url = base_route + "?id="+id_s7
-                                    doc = base_route_doc + '?id='+id_s7
+                                    url = base_route + "?id=" + id_s7
+                                    doc = base_route_doc + '?id=' + id_s7
 
                                     if 'DP' in id_s7 or 'RP' in id_s7:
                                         children1 = list_append(children0, {
