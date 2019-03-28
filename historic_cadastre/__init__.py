@@ -90,7 +90,7 @@ def main(global_config, **settings):
     config.add_route('home', '/')
     config.add_route('viewer', '/viewer.js')
     config.add_route('image_proxy', '/img/{type}/{id}')
-    config.add_route('pdf_proxy', '/pdf/{type}/{id}')
+    config.add_route('pdf_proxy', '/pdf/{type}/{id}.pdf')
 
     # historic parcels
     config.add_route('historic_parcel_get', '/historic_parcel/{id}')
